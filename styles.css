@@ -141,17 +141,50 @@ body {
 }
 
 .sidebar-domain-group {
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .sidebar-domain-label {
-  font-size: 0.72rem;
+  font-size: 0.75rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
+  padding: 0.35rem 0.5rem;
+  margin-bottom: 0.2rem;
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+}
+
+.sidebar-domain-label:hover {
+  background: var(--bg-surface-hover);
+}
+
+.sidebar-domain-chevron {
   color: var(--text-muted);
-  padding: 0.25rem 0.5rem;
-  margin-bottom: 0.35rem;
+  font-size: 0.7rem;
+  transition: transform 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-domain-group.collapsed .sidebar-domain-chevron {
+  transform: rotate(-90deg);
+}
+
+.sidebar-domain-group.collapsed .sidebar-domain-list {
+  display: none;
+}
+
+.sidebar-domain-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding-left: 0.25rem;
 }
 
 .sidebar-nav-item {
@@ -290,56 +323,7 @@ body {
   background: rgba(129, 140, 248, 0.1);
 }
 
-/* SYSTEM PROGRESSION FLOW NAV */
-.flow-nav {
-  padding: 1.25rem 0;
-  border-bottom: 1px solid var(--border-medium);
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
 
-.flow-nav-title {
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.flow-container {
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border-medium) transparent;
-  padding-bottom: 0.25rem;
-}
-
-.flow-node {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-medium);
-  border-radius: var(--radius-sm);
-  padding: 0.35rem 0.75rem;
-  font-size: 0.8rem;
-  color: var(--text-secondary);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.2s ease;
-}
-
-.flow-node:hover {
-  background: var(--bg-surface-hover);
-  color: var(--text-primary);
-  border-color: var(--ai-color);
-}
-
-.flow-arrow {
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  align-self: center;
-}
 
 /* STICKY TOOLBAR */
 .controls-bar {

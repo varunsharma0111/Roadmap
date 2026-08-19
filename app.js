@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     populateCategoryDropdown();
     renderDomainTabs();
     renderSidebarNav();
-    renderFlowTimeline();
     renderRoadmap();
     attachEventListeners();
   }
@@ -84,10 +83,22 @@ document.addEventListener("DOMContentLoaded", () => {
         tab.classList.remove("active");
       }
     });
+
+    if (domainId !== "all") {
+      const groups = document.querySelectorAll(".sidebar-domain-group");
+      groups.forEach(g => {
+        const label = g.querySelector(".sidebar-domain-label");
+        const domainObj = Object.values(DOMAINS).find(d => d.id === domainId);
+        if (domainObj && label && label.textContent.includes(domainObj.title)) {
+          g.classList.remove("collapsed");
+        }
+      });
+    }
+
     renderRoadmap();
   }
 
-  // Render Left Sidebar Navigation
+  // Render Left Sidebar Navigation (Starts Collapsed by Default)
   function renderSidebarNav() {
     if (!sidebarNav) return;
     sidebarNav.innerHTML = "";
@@ -108,13 +119,24 @@ document.addEventListener("DOMContentLoaded", () => {
       if (!categoriesInDomain || categoriesInDomain.length === 0) return;
 
       const groupEl = document.createElement("div");
-      groupEl.className = "sidebar-domain-group";
+      groupEl.className = "sidebar-domain-group collapsed";
 
       const labelEl = document.createElement("div");
       labelEl.className = "sidebar-domain-label";
       labelEl.style.color = domain.color;
-      labelEl.textContent = domain.title;
+      labelEl.innerHTML = `
+        <span>${domain.title}</span>
+        <span class="sidebar-domain-chevron">${ICONS.chevronDown}</span>
+      `;
+
+      labelEl.addEventListener("click", () => {
+        groupEl.classList.toggle("collapsed");
+      });
+
       groupEl.appendChild(labelEl);
+
+      const listEl = document.createElement("div");
+      listEl.className = "sidebar-domain-list";
 
       categoriesInDomain.forEach(cat => {
         const itemLink = document.createElement("a");
@@ -134,39 +156,15 @@ document.addEventListener("DOMContentLoaded", () => {
           itemLink.classList.add("active");
         });
 
-        groupEl.appendChild(itemLink);
+        listEl.appendChild(itemLink);
       });
 
+      groupEl.appendChild(listEl);
       sidebarNav.appendChild(groupEl);
     });
   }
 
-  // Render Flow Navigation Pills at top
-  function renderFlowTimeline() {
-    flowContainer.innerHTML = "";
-    ROADMAP_FLOW.forEach((step, idx) => {
-      const node = document.createElement("a");
-      node.className = "flow-node";
-      node.href = `#${step.catId}`;
-      node.textContent = step.label;
-      node.addEventListener("click", (e) => {
-        e.preventDefault();
-        const targetCat = document.getElementById(step.catId);
-        if (targetCat) {
-          targetCat.scrollIntoView({ behavior: "smooth", block: "start" });
-          targetCat.classList.remove("collapsed");
-        }
-      });
-      flowContainer.appendChild(node);
 
-      if (idx < ROADMAP_FLOW.length - 1) {
-        const arrow = document.createElement("span");
-        arrow.className = "flow-arrow";
-        arrow.textContent = "→";
-        flowContainer.appendChild(arrow);
-      }
-    });
-  }
 
   // Main Render Roadmap Function
   function renderRoadmap() {
