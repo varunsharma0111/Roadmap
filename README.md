@@ -1,6 +1,10 @@
-# 🚀 AI Engineer / FDE Master Roadmap
+# 🚀 AI Engineering & FDE Systems Roadmap
 
-An interactive, production-grade technical architecture index & competency roadmap for **AI Engineers** and **Forward Deployed Engineers (FDE)**.
+[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-https%3A%2F%2Froadmap--eight--gold.vercel.app%2F-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://roadmap-eight-gold.vercel.app/)
+
+> **Live Production URL**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
+
+A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
 
 Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
 
@@ -8,6 +12,8 @@ Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering,
 
 ## ✨ Features
 
+- **🌐 Deployed on Vercel**: Live interactive app at [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
+- **📍 Quick Navigation Sidebar**: Fixed left-side category index for instant section hopping.
 - **26 Technical Categories & 255 Topics**: From AI Primitives and Deep Learning to Transformers, AI Agents, MCP, Kubernetes, WebSockets, and MLOps.
 - **Executive Collapsed Landing View**: Categories start cleanly collapsed for high-level scanning.
 - **Interactive Expand & Collapse**: Click any category header or topic row to reveal production notes and prerequisites.
@@ -22,7 +28,7 @@ Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering,
 
 - **Frontend**: HTML5, Vanilla CSS3 (Custom Vercel / GitHub Dark inspired design tokens), Vanilla JavaScript (ES6+).
 - **Dependencies**: Zero external frameworks or libraries.
-- **Persistence**: Static & client-side execution.
+- **Hosting**: Vercel Static Hosting.
 
 ---
 
@@ -47,11 +53,12 @@ No build step or `npm install` required!
 ## 📂 Repository Structure
 
 ```
-├── index.html   # Main entry point & structural layout
-├── styles.css   # Modern dark-mode styling & domain color tokens
+├── index.html   # Main entry point & structural layout with Left Sidebar Navigation
+├── styles.css   # Modern dark-mode styling, domain accents & sidebar layout
 ├── app.js       # Search, filtering, expandable state & export engine
 ├── data.js      # Complete roadmap dataset (26 categories, 255 topics)
-└── README.md    # Documentation
+├── vercel.json  # Vercel deployment configuration
+└── README.md    # Documentation with Vercel Live Link
 ```
 
 ---

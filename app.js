@@ -1,10 +1,10 @@
 /**
  * AI Engineer / FDE Roadmap - Classy Technical Architecture Index
- * Starts with categories collapsed by default for a clean, executive view on load.
+ * Includes Left Sidebar Navigation & Dynamic Domain Category Links.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Application State - Categories start collapsed by default
+  // Application State
   let currentDomainFilter = "all";
   let currentCategoryFilter = "all";
   let searchQuery = "";
@@ -19,6 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   const roadmapContent = document.getElementById("roadmap-content");
   const flowContainer = document.getElementById("flow-container");
+  const sidebarNav = document.getElementById("sidebar-nav");
 
   const btnToggleAll = document.getElementById("btn-toggle-all");
   const btnExport = document.getElementById("btn-export");
@@ -36,6 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function init() {
     populateCategoryDropdown();
     renderDomainTabs();
+    renderSidebarNav();
     renderFlowTimeline();
     renderRoadmap();
     attachEventListeners();
@@ -83,6 +85,60 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
     renderRoadmap();
+  }
+
+  // Render Left Sidebar Navigation
+  function renderSidebarNav() {
+    if (!sidebarNav) return;
+    sidebarNav.innerHTML = "";
+
+    const domainGroupMap = {};
+    Object.keys(DOMAINS).forEach(dKey => {
+      domainGroupMap[DOMAINS[dKey].id] = [];
+    });
+
+    ROADMAP_DATA.forEach(cat => {
+      if (domainGroupMap[cat.domainId]) {
+        domainGroupMap[cat.domainId].push(cat);
+      }
+    });
+
+    Object.values(DOMAINS).forEach(domain => {
+      const categoriesInDomain = domainGroupMap[domain.id];
+      if (!categoriesInDomain || categoriesInDomain.length === 0) return;
+
+      const groupEl = document.createElement("div");
+      groupEl.className = "sidebar-domain-group";
+
+      const labelEl = document.createElement("div");
+      labelEl.className = "sidebar-domain-label";
+      labelEl.style.color = domain.color;
+      labelEl.textContent = domain.title;
+      groupEl.appendChild(labelEl);
+
+      categoriesInDomain.forEach(cat => {
+        const itemLink = document.createElement("a");
+        itemLink.className = "sidebar-nav-item";
+        itemLink.href = `#${cat.id}`;
+        itemLink.textContent = cat.title;
+
+        itemLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          const targetSection = document.getElementById(cat.id);
+          if (targetSection) {
+            targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+            targetSection.classList.remove("collapsed");
+          }
+
+          document.querySelectorAll(".sidebar-nav-item").forEach(el => el.classList.remove("active"));
+          itemLink.classList.add("active");
+        });
+
+        groupEl.appendChild(itemLink);
+      });
+
+      sidebarNav.appendChild(groupEl);
+    });
   }
 
   // Render Flow Navigation Pills at top
@@ -187,12 +243,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Create Classy Category Section - STARTS COLLAPSED BY DEFAULT (unless searching)
+  // Create Classy Category Section
   function createCategorySection(cat, topics, domain) {
     const section = document.createElement("section");
     section.className = "category-section";
     
-    // If user is searching or isAllExpanded is true, open; otherwise start collapsed
     if (!isAllExpanded && searchQuery.trim() === "") {
       section.classList.add("collapsed");
     }
