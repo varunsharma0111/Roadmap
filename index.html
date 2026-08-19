@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI Engineer / FDE Technical Roadmap - Interactive Architecture & Systems Index">
+  <title>AI Engineer / FDE Technical Roadmap</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- HEADER SECTION -->
+    <header class="header">
+      <div class="header-main">
+        <div class="header-brand">
+          <span class="brand-tag">Technical Index</span>
+          <h1 class="header-title">AI Engineer / FDE Master Roadmap</h1>
+          <p class="header-subtitle">
+            A structured architectural index covering AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Systems.
+          </p>
+        </div>
+
+        <div class="header-meta-pills">
+          <div class="meta-pill">
+            <span class="meta-dot"></span>
+            <span>26 System Categories</span>
+          </div>
+          <div class="meta-pill">
+            <span>4 Core Domains</span>
+          </div>
+          <button class="btn-export-link" id="btn-export">
+            Export Summary ↓
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- TIMELINE FLOW NAV -->
+    <nav class="flow-nav" aria-label="System Architecture Flow">
+      <div class="flow-nav-title">System Progression:</div>
+      <div class="flow-container" id="flow-container">
+        <!-- Dynamically rendered flow pills -->
+      </div>
+    </nav>
+
+    <!-- STICKY CONTROL TOOLBAR -->
+    <section class="controls-bar">
+      <div class="controls-wrapper">
+        
+        <div class="controls-search-row">
+          <div class="search-box">
+            <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+            </svg>
+            <input type="text" id="search-input" class="search-input" placeholder="Filter by topic, concept, or tool (e.g., LLM, RAG, Kafka, Docker)...">
+            <button id="search-clear" class="search-clear" aria-label="Clear Search">✕</button>
+          </div>
+
+          <select id="category-select" class="select-control" aria-label="Filter by Category">
+            <option value="all">All Categories</option>
+          </select>
+
+          <button id="btn-toggle-all" class="btn-action-outline">
+            Expand All
+          </button>
+        </div>
+
+        <!-- Domain Filter Tabs -->
+        <div class="domain-tabs" id="domain-tabs">
+          <!-- Dynamically rendered domain pills -->
+        </div>
+
+        <div class="results-counter" id="results-counter"></div>
+      </div>
+    </section>
+
+    <!-- MAIN ROADMAP CONTENT LIST -->
+    <main id="roadmap-content" class="roadmap-content">
+      <!-- Dynamically generated category sections & expandable topic lists -->
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <p><strong>AI Engineer / FDE Roadmap</strong> — Technical Systems Index</p>
+      <p>Clean, zero-dependency HTML, CSS & Vanilla JS.</p>
+    </footer>
+
+  </div>
+
+  <!-- TOAST NOTIFICATION -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
