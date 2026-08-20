@@ -172,65 +172,65 @@ const ROADMAP_DATA = [
       {
         id: "cat-4-3",
         name: "AI Eval (AI System Evaluation)",
-        def: "Evaluation of an AI system's quality, correctness, safety, or behavior.",
-        why: "Measurable test suites steering prompt, model, and agent engineering.",
+        def: "Quantitative framework for evaluating the accuracy, safety, groundedness, and trajectory of AI systems.",
+        why: "Replaces subjective manual prompt checks with repeatable benchmark scoring.",
         level: "Advanced",
-        example: "Test dataset (100 test cases) -> Change -> AI Eval -> Score",
-        remember: "User -> AI Agent -> LLM -> Tools -> Database / API"
+        example: "Eval Suite: 100 test cases -> Model v1: 82% | Model v2: 89%",
+        remember: "Quantitative benchmarking of AI outputs, agent trajectories, and model safety."
       },
       {
         id: "cat-4-4",
         name: "Correctness Eval",
-        def: "Is the answer factually correct?",
-        why: "Checks whether the model output is factually accurate against ground truth benchmark data.",
+        def: "Evaluation metric measuring whether an AI model output is factually accurate against ground truth.",
+        why: "Guarantees factual accuracy in domain-specific AI assistants and calculations.",
         level: "Advanced",
-        example: "Compare output against gold standard answer key",
-        remember: "Is the answer factually correct?"
+        example: "Compare generated answer against verified gold-standard reference",
+        remember: "Measures factual accuracy against ground truth."
       },
       {
         id: "cat-4-5",
         name: "Relevance & Groundedness Evals",
-        def: "Relevance: Did it answer the actual question? Groundedness: Is the answer supported by provided data?",
-        why: "Eliminates hallucinations in RAG and enterprise document retrieval systems.",
+        def: "Relevance checks if prompt was directly answered; Groundedness checks if answer relies on retrieved data.",
+        why: "Prevents hallucinations in enterprise RAG and document synthesis systems.",
         level: "Advanced",
-        example: "Verify answer directly relies on retrieved context passages",
-        remember: "Did it answer question & is it supported by data?"
+        example: "Verify RAG answer claims are supported by context passage tokens",
+        remember: "Relevance = answers question | Groundedness = supported by context."
       },
       {
         id: "cat-4-6",
         name: "Safety & Guardrail Eval",
-        def: "Does it avoid harmful/unsafe behavior?",
-        why: "Verifies model safety compliance against jailbreaks, toxicity, and unauthorized actions.",
+        def: "Evaluation testing if an AI model avoids generating toxic, harmful, or policy-violating responses.",
+        why: "Protects enterprise brand safety and defends against prompt injection attacks.",
         level: "Advanced",
-        example: "Test red-teaming prompts against safety filters",
-        remember: "Does it avoid harmful/unsafe behavior?"
+        example: "Execute 500 adversarial jailbreak prompts against model guardrails",
+        remember: "Verifies compliance with safety policies and guardrails."
       },
       {
         id: "cat-4-7",
         name: "Tool-Use & Trajectory Evals",
-        def: "Tool-use: Did the agent call the correct tool? Trajectory: Did it take the right sequence of actions?",
-        why: "Evaluates agent decision-making logic and step sequence efficiency.",
+        def: "Tool-use evaluates API parameter accuracy; Trajectory evaluates multi-step reasoning action sequences.",
+        why: "Prevents agent execution loops and validates optimal multi-step problem solving.",
         level: "Advanced",
-        example: "Verify agent tool call parameters & step count",
-        remember: "Tool-use = correct tool call | Trajectory = right sequence of actions"
+        example: "Verify agent invoked get_user_account() before initiate_refund()",
+        remember: "Tool-use = correct tool call | Trajectory = optimal reasoning sequence."
       },
       {
         id: "cat-4-8",
         name: "Latency & Cost Evals",
-        def: "Latency: How quickly did it respond? Cost: How expensive was the run?",
-        why: "Tracks Time-To-First-Token (TTFT), total response speed, and financial token expense.",
+        def: "Performance evaluation measuring inference execution speed, Time-To-First-Token (TTFT), and token expense.",
+        why: "Optimizes production AI costs and maintains acceptable user latency SLAs.",
         level: "Intermediate",
-        example: "Track latency (ms) & token cost ($)",
-        remember: "How fast and how expensive?"
+        example: "Benchmark TTFT (<500ms) and token cost ($/1k requests)",
+        remember: "Measures inference speed (TTFT) and token financial cost."
       },
       {
         id: "cat-4-9",
         name: "AI Regression Eval",
-        def: "Did a new model/prompt make performance worse?",
-        why: "Ensures prompt changes or model version upgrades do not degrade performance baseline.",
+        def: "Evaluation suite ensuring new prompt revisions or model version upgrades do not degrade baseline scores.",
+        why: "Prevents silent quality regressions when deploying prompt changes to production.",
         level: "Advanced",
-        example: "Compare v1 baseline (82%) vs v2 (89%) vs v3 (74%)",
-        remember: "Did a new model or prompt make performance worse?"
+        example: "Compare prompt v2.1 benchmark score against v2.0 production baseline",
+        remember: "Guarantees prompt or model updates do not degrade output quality."
       }
     ]
   },
@@ -367,56 +367,56 @@ const ROADMAP_DATA = [
       {
         id: "cat-10-1",
         name: "Secrets",
-        def: "Sensitive values that must be protected.",
-        why: "Prevents credential theft and unauthorized cloud infrastructure access.",
+        def: "Sensitive operational values such as database passwords, API keys, and private certificates requiring encryption at rest.",
+        why: "Prevents credential leaks by insulating sensitive keys from application source code.",
         level: "Beginner",
-        example: "DB password, API key",
-        remember: "Keep private"
+        example: "DB_PASSWORD=secret123, STRIPE_SECRET_KEY=sk_live_...",
+        remember: "Never hardcode or commit secrets to version control."
       },
       {
         id: "cat-10-2",
         name: "PAT Token (Personal Access Token)",
-        def: "Personal Access Token used to authenticate with a service/API.",
-        why: "Password replacement for programmatic API authentication and Git CLI operations.",
+        def: "Personal authentication token used to identify and authenticate API requests or Git CLI operations.",
+        why: "Acts as a revocable, scoped password replacement for programmatic API authentication.",
         level: "Beginner",
-        example: "GitHub PAT",
-        remember: "Password replacement for APIs/Git"
+        example: "GitHub Personal Access Token (ghp_...)",
+        remember: "PAT authenticates user API access; it is not a secret management service."
       },
       {
         id: "cat-10-3",
         name: "ENV Variables (Environment Variables)",
-        def: "Configuration values supplied to an application at runtime.",
-        why: "Configures application behavior across dev/prod environments without hardcoding code values.",
+        def: "Dynamic key-value parameters passed to application processes at runtime.",
+        why: "Configures environment behavior across dev, staging, and production without changing code.",
         level: "Beginner",
-        example: "DATABASE_URL=...",
-        remember: "Configure without hardcoding"
+        example: "DATABASE_URL=postgres://user:pass@host:5432/db",
+        remember: "Configure runtime parameters outside application binary."
       },
       {
         id: "cat-10-4",
         name: "Service Account",
-        def: "Non-human identity used by an application/service.",
-        why: "Grants applications automated permissions without associating with personal human credentials.",
+        def: "Non-human machine identity used by applications or container workloads to access cloud resources.",
+        why: "Grants automated workloads least-privilege cloud permissions without relying on personal user logins.",
         level: "Intermediate",
-        example: "Kubernetes pod accessing AWS S3 bucket",
-        remember: "Machine identity"
+        example: "AWS IAM Role for Service Accounts (IRSA) in Kubernetes",
+        remember: "Machine identity for automated pod and application workloads."
       },
       {
         id: "cat-10-5",
         name: "HashiCorp Vault",
-        def: "Central system for storing and accessing secrets securely.",
-        why: "Provides encrypted key storage, audit logging, short-lived dynamic leases, and key rotation.",
+        def: "Centralized secret management platform for storing, auditing, and dynamically leasing sensitive credentials.",
+        why: "Provides automated secret rotation, dynamic database credentials, strict audit logging, and encryption.",
         level: "Advanced",
-        example: "Store DB credentials and API keys",
-        remember: "Secret manager"
+        example: "Fetch dynamic PostgreSQL credentials via Vault API",
+        remember: "Centralized enterprise secret engine with dynamic credential leases."
       },
       {
         id: "cat-10-6",
         name: "Secret Flow Architecture",
-        def: "Application -> Needs password/API key -> Don't hardcode it -> ENV variable / Secret -> For larger systems -> Vault -> Service Account -> securely obtains access.",
-        why: "Decouples credentials from source code and automates security bounds.",
+        def: "Sequential security pipeline: App -> Needs Key -> ENV/Secret -> Vault Engine -> Service Account Access.",
+        why: "Decouples sensitive authentication logic from deployment pipelines and source control.",
         level: "Intermediate",
-        example: "App -> ENV/Secret -> Vault -> Service Account",
-        remember: "PAT is different: it's an authentication token, not general secret management."
+        example: "App requests key -> Vault validates Service Account -> Issues short-lived secret",
+        remember: "App -> ENV/Secret -> Vault -> Service Account."
       }
     ]
   },
@@ -691,73 +691,74 @@ const ROADMAP_DATA = [
       {
         id: "cat-24-2",
         name: "PageSpeed Insights",
-        def: "Measures webpage performance and provides optimization suggestions.",
-        why: "Audits mobile and desktop web loading speed and rendering performance.",
+        def: "Web performance auditing tool measuring page load times, Core Web Vitals, and optimization tips.",
+        why: "Identifies Largest Contentful Paint (LCP), layout shifts, and rendering bottlenecks.",
         level: "Beginner",
-        example: "Check mobile performance",
-        remember: "How fast is my page?"
+        example: "Audit Core Web Vitals: LCP < 2.5s, CLS < 0.1",
+        remember: "Audits page loading speed and Core Web Vitals."
       },
       {
         id: "cat-24-3",
         name: "Playwright",
-        def: "Browser automation/testing framework.",
-        why: "Automates real browser actions (clicks, forms, uploads, checkout).",
+        def: "End-to-end browser automation framework for testing modern web applications across browsers.",
+        why: "Automates real user browser interactions including clicks, form submissions, navigation, and visual diffs.",
         level: "Intermediate",
-        example: "Test login, upload, checkout",
-        remember: "Control a real browser"
+        example: "await page.goto('/login'); await page.click('#submit');",
+        remember: "Controls real browsers programmatically for E2E testing."
       },
       {
         id: "cat-24-4",
         name: "Regression Testing",
-        def: "Checks that new changes didn't break existing features.",
-        why: "Guarantees system stability when adding new features or refactoring.",
+        def: "Verification test suite ensuring recent code changes or bug fixes have not broken existing features.",
+        why: "Protects production stability when introducing new functionality or refactoring logic.",
         level: "Intermediate",
-        example: "New login feature breaks dashboard",
-        remember: "Did old things still work?"
+        example: "Run full test suite after upgrading core payment package",
+        remember: "Regression check: Did new code break existing functionality?"
       },
       {
         id: "cat-24-5",
         name: "Sanity Testing",
-        def: "Quick check that a specific change/build basically works.",
-        why: "Quickly determines if a new build is sane enough to proceed with deeper testing.",
+        def: "Unscripted, rapid surface test verifying whether a new software build functions basic operations.",
+        why: "Quickly validates if a build is stable enough to undergo comprehensive test execution.",
         level: "Beginner",
-        example: "After deployment, verify login works",
-        remember: "Is this build sane enough to continue testing?"
+        example: "Verify deployment landing page renders and accepts user login",
+        remember: "Rapid build check: Is this deployment sane enough to test?"
       },
       {
         id: "cat-24-6",
         name: "Testing Strategy Flow",
-        def: "New build -> Sanity test -> Regression testing.",
-        why: "Prevents running long regression test suites on broken builds.",
+        def: "Tiered deployment test sequence: New Build -> Sanity Test -> Full Regression Suite.",
+        why: "Saves CI/CD compute time by catching broken builds early before running long test suites.",
         level: "Intermediate",
-        remember: "Sanity test ('Does changed area work?') -> Regression testing ('Did we break anything else?')"
+        example: "Deploy build -> Sanity check passes -> Trigger full regression pipeline",
+        remember: "Sanity test validates immediate change; Regression test validates full system."
       },
       {
         id: "cat-24-7",
         name: "Feature Flag",
-        def: "Switch that lets you turn a feature on/off without redeploying the whole application.",
-        why: "Decouples code deployment from feature release exposure.",
+        def: "Configuration toggle allowing feature availability to be enabled or disabled at runtime without deployment.",
+        why: "Decouples code deployment from feature release exposure, enabling safer testing.",
         level: "Intermediate",
-        example: "new_video_player = false/true",
-        remember: "Deploy code -> Feature OFF -> Test internally -> Enable for 5% -> Monitor -> Enable for 50% -> Enable for 100%"
+        example: "if (featureFlags.isEnabled('new_checkout')) { showNewUI(); }",
+        remember: "Toggle features ON/OFF instantly without redeploying code."
       },
       {
         id: "cat-24-8",
         name: "Canary Deployment",
-        def: "Release a new application version to a small percentage of users/traffic first.",
-        why: "Validates server performance and metrics under live traffic before 100% rollout.",
+        def: "Progressive rollout strategy routing a small percentage of live production traffic to a new version.",
+        why: "Verifies server metrics, error rates, and load performance under real traffic before full release.",
         level: "Advanced",
-        example: "90% v1, 10% v2 -> Monitor errors/latency/CPU -> 25% -> 50% -> 100%",
-        remember: "Feature flag controls whether feature is enabled; Canary controls which version receives traffic."
+        example: "Route 10% traffic to v2, monitor error rate, scale to 100%",
+        remember: "Canary routes live traffic percentage; Feature Flag toggles code logic."
       },
       {
         id: "cat-24-9",
-        name: "Slack Alerting",
-        def: "Team communication platform for automated incident notifications.",
-        why: "Notifies DevOps and engineering teams instantly when monitoring detects outages.",
+        name: "Slack Incident Alerting",
+        def: "Automated notification channel sending real-time operational alerts from monitoring systems to team chat.",
+        why: "Minimizes Mean Time to Detect (MTTD) by alerting engineers immediately during outages.",
         level: "Beginner",
-        example: "Prometheus detects API outage -> Alerting system -> Slack #production-alerts -> DevOps engineer",
-        remember: "Monitoring detects -> Slack notifies the team"
+        example: "Alertmanager -> Webhook -> Slack #incident-response",
+        remember: "Connects monitoring alerts directly to engineering incident response."
       }
     ]
   },
@@ -796,47 +797,47 @@ const ROADMAP_DATA = [
       {
         id: "cat-26-2",
         name: "Grafana",
-        def: "Creates dashboards and visualizes telemetry.",
-        why: "Visualizes latency, CPU usage, memory, and API metrics from metric servers.",
+        def: "Open-source visualization platform for building real-time dashboards from telemetry metrics.",
+        why: "Provides visual insights into system latency, CPU utilization, request throughput, and error rates.",
         level: "Intermediate",
-        example: "CPU/API latency dashboard",
-        remember: "See the data"
+        example: "Prometheus + Grafana real-time server dashboard",
+        remember: "Visualizes metrics and system telemetry."
       },
       {
         id: "cat-26-3",
         name: "Splunk",
-        def: "Platform for collecting, searching and analyzing logs/data.",
-        why: "Searches millions of production error logs quickly during incident investigations.",
+        def: "Enterprise data platform for collecting, indexing, searching, and analyzing machine logs.",
+        why: "Enables high-speed log aggregation and multi-service search during incident investigations.",
         level: "Intermediate",
-        example: "Search production errors",
-        remember: "Search/analyze logs"
+        example: "Search log stream: index=prod_logs status=500",
+        remember: "Centralized search and analysis for production logs."
       },
       {
         id: "cat-26-4",
         name: "Sentry",
-        def: "Application error/crash monitoring.",
-        why: "Instantly alerts developers to unhandled code exceptions with exact stack traces.",
+        def: "Real-time error tracking and crash reporting platform for software applications.",
+        why: "Captures unhandled exceptions, breadcrumbs, and exact code stack traces automatically.",
         level: "Intermediate",
-        example: "See Python exception with stack trace",
-        remember: "Find application errors"
+        example: "Capture NullPointerException with source line numbers",
+        remember: "Monitors application code errors and exceptions."
       },
       {
         id: "cat-26-5",
         name: "New Relic",
-        def: "Application/system observability platform.",
-        why: "Monitors application execution speed, database query timings, and host server health.",
+        def: "Application Performance Monitoring (APM) platform tracking server health and distributed traces.",
+        why: "Identifies slow database queries, backend bottlenecks, and external service call latencies.",
         level: "Intermediate",
-        example: "APM, traces, infrastructure",
-        remember: "Observe application"
+        example: "Trace slow HTTP request across 4 microservices",
+        remember: "Observes application performance and APM traces."
       },
       {
         id: "cat-26-6",
         name: "Datadog",
-        def: "Unified monitoring/observability platform.",
-        why: "All-in-one monitoring platform combining metrics, logs, traces, and synthetics.",
+        def: "Unified cloud observability platform integrating metrics, distributed logs, APM traces, and synthetics.",
+        why: "Delivers full-stack infrastructure visibility across cloud hosts, containers, and serverless apps.",
         level: "Intermediate",
-        example: "Metrics + logs + traces",
-        remember: "Monitor everything"
+        example: "Infrastructure host metrics + APM traces + log correlation",
+        remember: "Unified full-stack monitoring across cloud infrastructure."
       }
     ]
   }
