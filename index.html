@@ -48,14 +48,14 @@
           <div class="header-brand">
             <h1 class="header-title">AI Engineering & FDE Systems Roadmap</h1>
             <p class="header-subtitle">
-              A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, security, observability, and distributed production systems.
+              A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
             </p>
           </div>
 
           <div class="header-meta-pills">
             <div class="meta-pill">
               <span class="meta-dot"></span>
-              <span>30 Master System Categories</span>
+              <span>26 System Categories</span>
             </div>
             <button class="btn-export-link" id="btn-export">
               Export Summary ↓
@@ -73,7 +73,7 @@
               <svg class="search-icon" width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
               </svg>
-              <input type="text" id="search-input" class="search-input" placeholder="Filter by topic, concept, or tool (e.g., Vault, Playwright, Datadog, AI Eval)...">
+              <input type="text" id="search-input" class="search-input" placeholder="Filter by topic, concept, or tool (e.g., LLM, RAG, Kafka, Docker)...">
               <button id="search-clear" class="search-clear" aria-label="Clear Search">✕</button>
             </div>
 
@@ -91,34 +91,8 @@
             <!-- Dynamically rendered domain pills -->
           </div>
 
-          <!-- Quick Reference Section Toggles -->
-          <div class="view-toggle-bar">
-            <button id="btn-toggle-roadmap" class="view-toggle-btn active">
-              <span>📌 30-Step Master Sequence</span>
-            </button>
-            <button id="btn-toggle-arch" class="view-toggle-btn">
-              <span>⚡ Production Architecture Flow</span>
-            </button>
-            <button id="btn-toggle-distinctions" class="view-toggle-btn">
-              <span>🧠 Key Concept Distinctions</span>
-            </button>
-          </div>
-
           <div class="results-counter" id="results-counter"></div>
         </div>
-      </section>
-
-      <!-- INTERACTIVE ARCHITECTURE & REFERENCE PANELS -->
-      <section id="roadmap-flow-container" class="reference-section">
-        <!-- Rendered dynamically via JS -->
-      </section>
-
-      <section id="architecture-flow-container" class="reference-section hidden">
-        <!-- Rendered dynamically via JS -->
-      </section>
-
-      <section id="distinctions-container" class="reference-section hidden">
-        <!-- Rendered dynamically via JS -->
       </section>
 
       <!-- MAIN ROADMAP CONTENT LIST -->
@@ -128,7 +102,7 @@
 
       <!-- FOOTER -->
       <footer class="footer">
-        <p><strong>AI Engineer / FDE Master Roadmap</strong> — Comprehensive Systems Reference</p>
+        <p><strong>AI Engineer / FDE Roadmap</strong> — Comprehensive Systems Reference</p>
       </footer>
 
     </div>
