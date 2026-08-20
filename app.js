@@ -1,6 +1,6 @@
 /**
  * AI Engineer / FDE Roadmap - Classy Technical Architecture Index
- * Includes Left Sidebar Navigation & Dynamic Domain Category Links.
+ * Includes Left Sidebar Navigation, 30 Master Roadmap Steps, Interactive Architecture Flow, and Key Distinctions Matrix.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -28,10 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
   const btnExport = document.getElementById("btn-export");
   const toastContainer = document.getElementById("toast-container");
 
+  const btnToggleRoadmap = document.getElementById("btn-toggle-roadmap");
+  const btnToggleArch = document.getElementById("btn-toggle-arch");
+  const btnToggleDistinctions = document.getElementById("btn-toggle-distinctions");
+
+  const roadmapFlowContainer = document.getElementById("roadmap-flow-container");
+  const archFlowContainer = document.getElementById("architecture-flow-container");
+  const distinctionsContainer = document.getElementById("distinctions-container");
+
   // SVG Icons helper
   const ICONS = {
     check: `<svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg>`,
-    chevronDown: `<svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>`
+    chevronDown: `<svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" /></svg>`,
+    arrowRight: `<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" /></svg>`
   };
 
   // Initial Setup
@@ -41,13 +50,16 @@ document.addEventListener("DOMContentLoaded", () => {
     populateCategoryDropdown();
     renderDomainTabs();
     renderSidebarNav();
+    renderRoadmapFlow();
+    renderArchitectureFlow();
+    renderKeyDistinctions();
     renderRoadmap();
     attachEventListeners();
   }
 
-  // Populate Dropdown Filters
+  // Populate Dropdown Filters (All 30 Categories)
   function populateCategoryDropdown() {
-    categorySelect.innerHTML = `<option value="all">All Categories</option>`;
+    categorySelect.innerHTML = `<option value="all">All 30 Categories</option>`;
     ROADMAP_DATA.forEach(cat => {
       const opt = document.createElement("option");
       opt.value = cat.id;
@@ -101,7 +113,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderRoadmap();
   }
 
-  // Render Left Sidebar Navigation (Starts Collapsed by Default)
+  // Render Left Sidebar Navigation
   function renderSidebarNav() {
     if (!sidebarNav) return;
     sidebarNav.innerHTML = "";
@@ -149,14 +161,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         itemLink.addEventListener("click", (e) => {
           e.preventDefault();
-          const targetSection = document.getElementById(cat.id);
-          if (targetSection) {
-            targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
-            targetSection.classList.remove("collapsed");
-          }
-
-          document.querySelectorAll(".sidebar-nav-item").forEach(el => el.classList.remove("active"));
-          itemLink.classList.add("active");
+          scrollToCategory(cat.id);
           closeMobileSidebar();
         });
 
@@ -168,7 +173,168 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Scroll to Category Section
+  function scrollToCategory(catId) {
+    if (searchQuery !== "" || currentDomainFilter !== "all" || currentCategoryFilter !== "all") {
+      currentDomainFilter = "all";
+      currentCategoryFilter = "all";
+      searchQuery = "";
+      searchInput.value = "";
+      searchClear.style.display = "none";
+      categorySelect.value = "all";
+      document.querySelectorAll(".domain-tab").forEach(t => t.classList.remove("active"));
+      document.querySelector('.domain-tab[data-domain="all"]').classList.add("active");
+      renderRoadmap();
+    }
 
+    setTimeout(() => {
+      const targetSection = document.getElementById(catId);
+      if (targetSection) {
+        targetSection.classList.remove("collapsed");
+        targetSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        targetSection.classList.add("highlight-target");
+        setTimeout(() => {
+          targetSection.classList.remove("highlight-target");
+        }, 2500);
+      }
+    }, 100);
+  }
+
+  // Render 30-Step Master Roadmap Grid
+  function renderRoadmapFlow() {
+    if (!roadmapFlowContainer) return;
+    roadmapFlowContainer.innerHTML = "";
+
+    const card = document.createElement("div");
+    card.className = "ref-card";
+
+    card.innerHTML = `
+      <div class="ref-card-header">
+        <div>
+          <h3 class="ref-card-title">📌 30-Step Master DevOps & AI Engineering Sequence</h3>
+          <p class="ref-card-sub">Sequential learning order from core systems & infrastructure up to production AI evaluations.</p>
+        </div>
+      </div>
+      <div class="roadmap-flow-grid" id="roadmap-flow-grid"></div>
+    `;
+
+    const grid = card.querySelector("#roadmap-flow-grid");
+    ROADMAP_FLOW.forEach(item => {
+      const pill = document.createElement("button");
+      pill.className = "flow-step-pill";
+      pill.setAttribute("data-cat-id", item.catId);
+      pill.innerHTML = `
+        <span class="step-num">${item.step}</span>
+        <span class="step-label">${item.label}</span>
+      `;
+      pill.addEventListener("click", () => {
+        scrollToCategory(item.catId);
+      });
+      grid.appendChild(pill);
+    });
+
+    roadmapFlowContainer.appendChild(card);
+  }
+
+  // Render System Architecture Flow Diagram
+  function renderArchitectureFlow() {
+    if (!archFlowContainer) return;
+    archFlowContainer.innerHTML = "";
+
+    const card = document.createElement("div");
+    card.className = "ref-card";
+
+    let stagesHtml = SYSTEM_ARCHITECTURE_FLOW.stages.map((stage, idx) => {
+      const itemsList = stage.items.map(i => `<span class="arch-item-tag">${i}</span>`).join(" ");
+      const isLast = idx === SYSTEM_ARCHITECTURE_FLOW.stages.length - 1;
+      return `
+        <div class="arch-stage-card" style="border-top-color: ${stage.color};">
+          <div class="arch-stage-header">
+            <span class="arch-stage-title" style="color: ${stage.color};">${stage.name}</span>
+          </div>
+          <p class="arch-stage-desc">${stage.desc}</p>
+          <div class="arch-items-wrap">${itemsList}</div>
+        </div>
+        ${!isLast ? `<div class="arch-arrow-connector">${ICONS.arrowRight}</div>` : ""}
+      `;
+    }).join("");
+
+    card.innerHTML = `
+      <div class="ref-card-header">
+        <div>
+          <h3 class="ref-card-title">⚡ ${SYSTEM_ARCHITECTURE_FLOW.title}</h3>
+          <p class="ref-card-sub">${SYSTEM_ARCHITECTURE_FLOW.subtitle}</p>
+        </div>
+      </div>
+      <div class="arch-flow-diagram">
+        ${stagesHtml}
+      </div>
+    `;
+
+    archFlowContainer.appendChild(card);
+  }
+
+  // Render Key Concept Distinctions Matrix
+  function renderKeyDistinctions() {
+    if (!distinctionsContainer) return;
+    distinctionsContainer.innerHTML = "";
+
+    const card = document.createElement("div");
+    card.className = "ref-card";
+
+    let contentHtml = KEY_DISTINCTIONS.map(dist => {
+      let rowsHtml = dist.pairs.map(pair => `
+        <tr class="dist-table-row">
+          <td class="dist-col-topic">
+            <strong class="dist-topic-name">${pair.topic}</strong>
+            <span class="dist-topic-role">${pair.role}</span>
+          </td>
+          <td class="dist-col-exp">${pair.explanation}</td>
+          <td class="dist-col-remember">
+            <span class="dist-remember-badge">💡 ${pair.remember}</span>
+            ${pair.example ? `<div class="dist-example"><code>${pair.example}</code></div>` : ""}
+          </td>
+        </tr>
+      `).join("");
+
+      return `
+        <div class="dist-group">
+          <div class="dist-group-header">
+            <h4 class="dist-group-title">${dist.category}</h4>
+            <p class="dist-group-sub">${dist.description}</p>
+          </div>
+          <div class="dist-table-wrapper">
+            <table class="dist-table">
+              <thead>
+                <tr>
+                  <th>Topic / Role</th>
+                  <th>Concept & Purpose</th>
+                  <th>Key Distinction / Example</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rowsHtml}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }).join("");
+
+    card.innerHTML = `
+      <div class="ref-card-header">
+        <div>
+          <h3 class="ref-card-title">🧠 Core Concept Key Distinctions (Memorization Cheat-Sheet)</h3>
+          <p class="ref-card-sub">Essential responsibility separations between tools, credentials, testing, deployment, and AI evaluation metrics.</p>
+        </div>
+      </div>
+      <div class="dist-container-body">
+        ${contentHtml}
+      </div>
+    `;
+
+    distinctionsContainer.appendChild(card);
+  }
 
   // Main Render Roadmap Function
   function renderRoadmap() {
@@ -212,7 +378,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const matchDef = topic.def.toLowerCase().includes(q);
             const matchWhy = topic.why.toLowerCase().includes(q);
             const matchCat = cat.title.toLowerCase().includes(q);
-            return matchName || matchDef || matchWhy || matchCat;
+            const matchEx = topic.example ? topic.example.toLowerCase().includes(q) : false;
+            const matchRem = topic.remember ? topic.remember.toLowerCase().includes(q) : false;
+            return matchName || matchDef || matchWhy || matchCat || matchEx || matchRem;
           }
 
           return true;
@@ -245,7 +413,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Create Classy Category Section
+  // Create Category Section Component
   function createCategorySection(cat, topics, domain) {
     const section = document.createElement("section");
     section.className = "category-section";
@@ -284,7 +452,7 @@ document.addEventListener("DOMContentLoaded", () => {
     return section;
   }
 
-  // Create Compact Classy Topic Row Component
+  // Create Topic Row Component
   function createTopicRow(topic, domain) {
     const row = document.createElement("div");
     row.className = "topic-row";
@@ -301,6 +469,26 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="details-block" style="margin-top: 0.75rem;">
           <div class="details-label">Prerequisites</div>
           <div class="prereq-tags">${tags}</div>
+        </div>
+      `;
+    }
+
+    let exampleHtml = "";
+    if (topic.example) {
+      exampleHtml = `
+        <div class="details-block">
+          <div class="details-label">Example</div>
+          <div class="details-code-box"><code>${topic.example}</code></div>
+        </div>
+      `;
+    }
+
+    let rememberHtml = "";
+    if (topic.remember) {
+      rememberHtml = `
+        <div class="details-block">
+          <div class="details-label">Key Distinction / Memorize</div>
+          <div class="remember-box">💡 ${topic.remember}</div>
         </div>
       `;
     }
@@ -325,12 +513,12 @@ document.addEventListener("DOMContentLoaded", () => {
           <div class="details-label">What it does / Production Notes</div>
           <div class="details-text">${topic.why}</div>
         </div>
+        ${exampleHtml}
+        ${rememberHtml}
         ${prereqsHtml}
       </div>
     `;
 
-    const toggleBtn = row.querySelector(".btn-toggle-row");
-    
     const toggleExpand = () => {
       row.classList.toggle("expanded");
     };
@@ -443,19 +631,76 @@ document.addEventListener("DOMContentLoaded", () => {
       btnToggleAll.textContent = isAllExpanded ? "Collapse All" : "Expand All";
     });
 
+    // Reference Section View Toggles
+    if (btnToggleRoadmap) {
+      btnToggleRoadmap.addEventListener("click", () => {
+        toggleReferencePanel(roadmapFlowContainer, btnToggleRoadmap);
+      });
+    }
+    if (btnToggleArch) {
+      btnToggleArch.addEventListener("click", () => {
+        toggleReferencePanel(archFlowContainer, btnToggleArch);
+      });
+    }
+    if (btnToggleDistinctions) {
+      btnToggleDistinctions.addEventListener("click", () => {
+        toggleReferencePanel(distinctionsContainer, btnToggleDistinctions);
+      });
+    }
+
+    function toggleReferencePanel(targetContainer, targetBtn) {
+      const isCurrentlyHidden = targetContainer.classList.contains("hidden");
+
+      if (isCurrentlyHidden) {
+        targetContainer.classList.remove("hidden");
+        targetBtn.classList.add("active");
+        targetContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+      } else {
+        targetContainer.classList.add("hidden");
+        targetBtn.classList.remove("active");
+      }
+    }
+
+    // Comprehensive Export Summary
     btnExport.addEventListener("click", () => {
-      let markdown = `# AI Engineer / FDE Roadmap Summary\n\n`;
+      let markdown = `# AI Engineer / FDE Master Roadmap Summary\n\n`;
+
+      markdown += `## 30-Step Learning Roadmap Sequence\n`;
+      ROADMAP_FLOW.forEach(s => {
+        markdown += `${s.step}. ${s.label}\n`;
+      });
+      markdown += `\n---\n\n`;
+
+      markdown += `## Production System Architecture Workflow\n`;
+      SYSTEM_ARCHITECTURE_FLOW.stages.forEach(st => {
+        markdown += `### ${st.name}\n${st.desc}\n- **Components**: ${st.items.join(", ")}\n\n`;
+      });
+      markdown += `---\n\n`;
+
+      markdown += `## Key Concept Distinctions (Memorization Cheat-Sheet)\n`;
+      KEY_DISTINCTIONS.forEach(kd => {
+        markdown += `### ${kd.category}\n`;
+        kd.pairs.forEach(p => {
+          markdown += `- **${p.topic}** (${p.role}): ${p.explanation}\n  *Key Remember*: ${p.remember}\n`;
+        });
+        markdown += `\n`;
+      });
+      markdown += `---\n\n`;
+
+      markdown += `## Full Topic Catalog\n\n`;
       ROADMAP_DATA.forEach(cat => {
-        markdown += `## ${cat.title}\n`;
+        markdown += `### ${cat.title}\n`;
         markdown += `${cat.description}\n\n`;
         cat.topics.forEach(t => {
           markdown += `- **${t.name}**: ${t.def}\n  *Production Notes*: ${t.why}\n`;
+          if (t.example) markdown += `  *Example*: \`${t.example}\` \n`;
+          if (t.remember) markdown += `  *Remember*: ${t.remember}\n`;
         });
         markdown += `\n`;
       });
 
       navigator.clipboard.writeText(markdown).then(() => {
-        showToast("Summary copied to clipboard!");
+        showToast("Complete Master Summary copied to clipboard!");
       }).catch(() => {
         showToast("Summary ready.");
       });
