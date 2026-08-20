@@ -18,8 +18,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultsCounter = document.getElementById("results-counter");
 
   const roadmapContent = document.getElementById("roadmap-content");
-  const flowContainer = document.getElementById("flow-container");
+  const sidebar = document.getElementById("sidebar");
   const sidebarNav = document.getElementById("sidebar-nav");
+  const sidebarClose = document.getElementById("sidebar-close");
+  const sidebarOverlay = document.getElementById("sidebar-overlay");
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 
   const btnToggleAll = document.getElementById("btn-toggle-all");
   const btnExport = document.getElementById("btn-export");
@@ -154,6 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
           document.querySelectorAll(".sidebar-nav-item").forEach(el => el.classList.remove("active"));
           itemLink.classList.add("active");
+          closeMobileSidebar();
         });
 
         listEl.appendChild(itemLink);
@@ -386,8 +390,28 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   }
 
+  function openMobileSidebar() {
+    if (sidebar) sidebar.classList.add("open");
+    if (sidebarOverlay) sidebarOverlay.classList.add("open");
+  }
+
+  function closeMobileSidebar() {
+    if (sidebar) sidebar.classList.remove("open");
+    if (sidebarOverlay) sidebarOverlay.classList.remove("open");
+  }
+
   // Event Listeners
   function attachEventListeners() {
+    if (mobileMenuBtn) {
+      mobileMenuBtn.addEventListener("click", openMobileSidebar);
+    }
+    if (sidebarClose) {
+      sidebarClose.addEventListener("click", closeMobileSidebar);
+    }
+    if (sidebarOverlay) {
+      sidebarOverlay.addEventListener("click", closeMobileSidebar);
+    }
+
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value;
       searchClear.style.display = searchQuery ? "block" : "none";
@@ -420,7 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnExport.addEventListener("click", () => {
-      let markdown = `# AI Engineer / FDE Technical Roadmap\n\n`;
+      let markdown = `# AI Engineer / FDE Roadmap Summary\n\n`;
       ROADMAP_DATA.forEach(cat => {
         markdown += `## ${cat.title}\n`;
         markdown += `${cat.description}\n\n`;
@@ -431,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
       });
 
       navigator.clipboard.writeText(markdown).then(() => {
-        showToast("Technical summary copied to clipboard!");
+        showToast("Summary copied to clipboard!");
       }).catch(() => {
         showToast("Summary ready.");
       });

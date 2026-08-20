@@ -1,9 +1,5 @@
 # 🚀 AI Engineering & FDE Systems Roadmap
 
-[![Live Demo](https://img.shields.io/badge/🌐_Live_Demo-https%3A%2F%2Froadmap--eight--gold.vercel.app%2F-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://roadmap-eight-gold.vercel.app/)
-
-> **Live Production URL**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
-
 A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
 
 Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
@@ -12,8 +8,7 @@ Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering,
 
 ## ✨ Features
 
-- **🌐 Deployed on Vercel**: Live interactive app at [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
-- **📍 Quick Navigation Sidebar**: Fixed left-side category index for instant section hopping.
+- **📍 Quick Navigation Sidebar**: Slide-over drawer on mobile and left-side index on desktop for instant section hopping.
 - **26 Technical Categories & 255 Topics**: From AI Primitives and Deep Learning to Transformers, AI Agents, MCP, Kubernetes, WebSockets, and MLOps.
 - **Executive Collapsed Landing View**: Categories start cleanly collapsed for high-level scanning.
 - **Interactive Expand & Collapse**: Click any category header or topic row to reveal production notes and prerequisites.
@@ -58,7 +53,7 @@ No build step or `npm install` required!
 ├── app.js       # Search, filtering, expandable state & export engine
 ├── data.js      # Complete roadmap dataset (26 categories, 255 topics)
 ├── vercel.json  # Vercel deployment configuration
-└── README.md    # Documentation with Vercel Live Link
+└── README.md    # Documentation
 ```
 
 ---

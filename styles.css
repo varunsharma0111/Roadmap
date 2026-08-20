@@ -729,6 +729,69 @@ body {
   gap: 0.6rem;
 }
 
+/* SIDEBAR CLOSE BUTTON & OVERLAY */
+.sidebar-close-btn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.2rem 0.5rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: color 0.15s ease;
+}
+
+.sidebar-close-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-surface-hover);
+}
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 990;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* MOBILE NAVIGATION BAR */
+.mobile-nav-bar {
+  display: none;
+  margin-bottom: 1.25rem;
+}
+
+.mobile-menu-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  padding: 0.55rem 1rem;
+  border-radius: var(--radius-md);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--ai-color);
+  color: var(--ai-color);
+}
+
 /* FOOTER */
 .footer {
   padding: 2.5rem 0;
@@ -738,27 +801,93 @@ body {
   font-size: 0.82rem;
 }
 
-/* RESPONSIVE BREAKPOINTS */
+/* RESPONSIVE BREAKPOINTS & SCREEN ADAPTABILITY */
 @media (max-width: 992px) {
   .sidebar {
-    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.5);
+    width: 290px;
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebar-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sidebar-close-btn {
+    display: block;
+  }
+
+  .mobile-nav-bar {
+    display: block;
   }
 
   .main-wrapper {
     padding: 0 1.25rem;
+    max-width: 100%;
   }
 }
 
 @media (max-width: 768px) {
+  .header {
+    padding: 1.75rem 0 1.5rem;
+  }
+
   .header-main {
     flex-direction: column;
     align-items: flex-start;
+    gap: 1.25rem;
+  }
+
+  .header-title {
+    font-size: clamp(1.4rem, 6vw, 1.9rem);
+  }
+
+  .controls-bar {
+    padding: 0.85rem 0;
+  }
+
+  .controls-search-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.65rem;
+  }
+
+  .search-box {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .select-control {
+    width: 100%;
+  }
+
+  .btn-action-outline {
+    width: 100%;
+    text-align: center;
+  }
+
+  .domain-tabs {
+    padding-bottom: 0.25rem;
+    -webkit-overflow-scrolling: touch;
   }
 
   .category-header {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.6rem;
+    padding: 1rem 1.1rem;
   }
 
   .category-header-right {
@@ -769,26 +898,69 @@ body {
   .topic-summary {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.4rem;
+    gap: 0.5rem;
+    padding: 0.85rem 1.1rem;
   }
 
   .topic-left {
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.2rem;
+    gap: 0.25rem;
     width: 100%;
   }
 
   .topic-name {
     min-width: unset;
     max-width: 100%;
+    font-size: 0.9rem;
+    white-space: normal;
+    word-break: break-word;
   }
 
   .topic-def {
     white-space: normal;
+    word-break: break-word;
+    font-size: 0.82rem;
+  }
+
+  .topic-right {
+    width: 100%;
+    justify-content: flex-end;
   }
 
   .topic-details {
-    padding-left: 1.4rem;
+    padding: 0.85rem 1.1rem 1rem 1.1rem;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
+
+  .prereq-tags {
+    gap: 0.35rem;
+  }
+
+  .prereq-pill {
+    white-space: normal;
+    word-break: break-word;
   }
 }
+
+@media (max-width: 480px) {
+  .main-wrapper {
+    padding: 0 0.85rem;
+  }
+
+  .header-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .domain-tab {
+    font-size: 0.75rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .toast {
+    font-size: 0.8rem;
+    padding: 0.65rem 0.9rem;
+  }
+}
+
