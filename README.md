@@ -2,7 +2,9 @@
 
 A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
 
-Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
+Covers topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
+
+🔗 **Live Deployment**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
 
 ---
 
@@ -23,7 +25,7 @@ Covers 255 technical topics across 26 categories in AI Systems, LLM Engineering,
 
 - **Frontend**: HTML5, Vanilla CSS3 (Custom Vercel / GitHub Dark inspired design tokens), Vanilla JavaScript (ES6+).
 - **Dependencies**: Zero external frameworks or libraries.
-- **Hosting**: Vercel Static Hosting.
+- **Hosting**: [Vercel Static Hosting](https://roadmap-eight-gold.vercel.app/)
 
 ---
 
