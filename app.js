@@ -65,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Render Domain Filter Tabs
   function renderDomainTabs() {
+    if (!domainTabsContainer) return;
     domainTabsContainer.innerHTML = "";
     
     const allTab = document.createElement("button");
@@ -167,7 +168,8 @@ document.addEventListener("DOMContentLoaded", () => {
       searchInput.value = "";
       searchClear.style.display = "none";
       document.querySelectorAll(".domain-tab").forEach(t => t.classList.remove("active"));
-      document.querySelector('.domain-tab[data-domain="all"]').classList.add("active");
+      const defaultDomainTab = document.querySelector('.domain-tab[data-domain="all"]');
+      if (defaultDomainTab) defaultDomainTab.classList.add("active");
       renderRoadmap();
     }
 
@@ -494,7 +496,8 @@ document.addEventListener("DOMContentLoaded", () => {
       searchClear.style.display = "none";
       categorySelect.value = "all";
       document.querySelectorAll(".domain-tab").forEach(t => t.classList.remove("active"));
-      document.querySelector('.domain-tab[data-domain="all"]').classList.add("active");
+      const defaultDomainTab = document.querySelector('.domain-tab[data-domain="all"]');
+      if (defaultDomainTab) defaultDomainTab.classList.add("active");
       renderRoadmap();
     }
 
@@ -571,32 +574,34 @@ document.addEventListener("DOMContentLoaded", () => {
       btnToggleAll.textContent = isAllExpanded ? "Collapse All" : "Expand All";
     });
 
-    btnExport.addEventListener("click", () => {
-      let markdown = `# AI Engineer / FDE Roadmap Summary\n\n`;
+    if (btnExport) {
+      btnExport.addEventListener("click", () => {
+        let markdown = `# AI Engineer / FDE Roadmap Summary\n\n`;
 
-      ROADMAP_DATA.forEach(cat => {
-        markdown += `## ${cat.title}\n`;
-        markdown += `${cat.description}\n\n`;
-        cat.topics.forEach(t => {
-          markdown += `### ${t.name}\n`;
-          if (t.idea) markdown += `**The Idea:** ${t.idea}\n`;
-          else if (t.def) markdown += `**Summary:** ${t.def}\n`;
-          if (t.mentalModel) markdown += `**Mental Model:** ${t.mentalModel}\n`;
-          if (t.howItWorks) markdown += `**How It Works:** ${t.howItWorks}\n`;
-          if (t.why) markdown += `**Why It Exists:** ${t.why}\n`;
-          if (t.example) markdown += `**Practical Example:** \`${t.example}\` \n`;
-          if (t.remember) markdown += `**Important Distinction:** ${t.remember}\n`;
+        ROADMAP_DATA.forEach(cat => {
+          markdown += `## ${cat.title}\n`;
+          markdown += `${cat.description}\n\n`;
+          cat.topics.forEach(t => {
+            markdown += `### ${t.name}\n`;
+            if (t.idea) markdown += `**The Idea:** ${t.idea}\n`;
+            else if (t.def) markdown += `**Summary:** ${t.def}\n`;
+            if (t.mentalModel) markdown += `**Mental Model:** ${t.mentalModel}\n`;
+            if (t.howItWorks) markdown += `**How It Works:** ${t.howItWorks}\n`;
+            if (t.why) markdown += `**Why It Exists:** ${t.why}\n`;
+            if (t.example) markdown += `**Practical Example:** \`${t.example}\` \n`;
+            if (t.remember) markdown += `**Important Distinction:** ${t.remember}\n`;
+            markdown += `\n`;
+          });
           markdown += `\n`;
         });
-        markdown += `\n`;
-      });
 
-      navigator.clipboard.writeText(markdown).then(() => {
-        showToast("Summary copied to clipboard!");
-      }).catch(() => {
-        showToast("Summary ready.");
+        navigator.clipboard.writeText(markdown).then(() => {
+          showToast("Summary copied to clipboard!");
+        }).catch(() => {
+          showToast("Summary ready.");
+        });
       });
-    });
+    }
   }
 
   function showToast(message) {

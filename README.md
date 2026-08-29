@@ -1,6 +1,6 @@
-# 🚀 AI Engineering & FDE Systems Roadmap
+# 🚀 AI Engineering & Production Systems Roadmap
 
-A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
+A practical roadmap to understand how modern AI, backend, cloud, DevOps, and distributed systems work in the real world.
 
 Covers 52 core technical topics in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
 
