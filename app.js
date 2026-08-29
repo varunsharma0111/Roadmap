@@ -322,9 +322,10 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     } else {
       if (searchQuery.trim() !== "" && firstMatchingCatId) {
-        updateActiveSidebarItem(firstMatchingCatId, true);
+        updateActiveSidebarItem(firstMatchingCatId, false);
+      } else {
+        initScrollSpy();
       }
-      initScrollSpy();
     }
   }
 
@@ -332,7 +333,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const section = document.createElement("section");
     section.className = "category-section";
     
-    if (!isAllExpanded && searchQuery.trim() === "") {
+    if (searchQuery.trim() !== "") {
+      section.classList.remove("collapsed");
+    } else if (!isAllExpanded) {
       section.classList.add("collapsed");
     }
 
@@ -515,6 +518,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    if (searchQuery.trim() !== "") {
+      row.classList.add("expanded");
+    }
+
     row.addEventListener("click", (e) => {
       if (e.target.closest(".related-topic-pill") || e.target.closest(".prereq-pill")) return;
       row.classList.toggle("expanded");
@@ -594,6 +601,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     searchInput.addEventListener("input", (e) => {
       searchQuery = e.target.value;
+      if (searchQuery.trim() !== "") {
+        currentCategoryFilter = "all";
+        if (categorySelect) categorySelect.value = "all";
+      }
       searchClear.style.display = searchQuery ? "block" : "none";
       renderRoadmap();
     });
