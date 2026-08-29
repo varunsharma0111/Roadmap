@@ -2,7 +2,7 @@
 
 A comprehensive architectural reference mapping end-to-end AI models, agentic workflows, cloud infrastructure, and distributed production systems.
 
-Covers topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
+Covers 52 core technical topics in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
 
 🔗 **Live Deployment**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
 
@@ -11,7 +11,7 @@ Covers topics across 26 categories in AI Systems, LLM Engineering, Cloud Infrast
 ## ✨ Features
 
 - **📍 Quick Navigation Sidebar**: Slide-over drawer on mobile and left-side index on desktop for instant section hopping.
-- **26 Technical Categories & 255 Topics**: From AI Primitives and Deep Learning to Transformers, AI Agents, MCP, Kubernetes, WebSockets, and MLOps.
+- **52 Core Technical Topics**: From Kubernetes Pods & Services to Kafka, Observability, AI Agent Permissions, Harness Engineering, and AI Evaluations.
 - **Executive Collapsed Landing View**: Categories start cleanly collapsed for high-level scanning.
 - **Interactive Expand & Collapse**: Click any category header or topic row to reveal production notes and prerequisites.
 - **Instant Search**: Real-time filtering across topic names, definitions, tools, and concepts (e.g. *RAG*, *LLM*, *Kafka*, *Docker*).

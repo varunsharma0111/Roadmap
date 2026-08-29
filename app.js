@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Populate Dropdown Filters
   function populateCategoryDropdown() {
-    categorySelect.innerHTML = `<option value="all">All 26 Categories</option>`;
+    categorySelect.innerHTML = `<option value="all">All ${ROADMAP_DATA.length} Categories</option>`;
     ROADMAP_DATA.forEach(cat => {
       const opt = document.createElement("option");
       opt.value = cat.id;
