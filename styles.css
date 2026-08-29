@@ -94,6 +94,15 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.4rem;
+  border-radius: var(--radius-sm);
+  transition: background 0.15s ease;
+  user-select: none;
+}
+
+.sidebar-brand:hover {
+  background: var(--bg-surface-hover);
 }
 
 .brand-dot {

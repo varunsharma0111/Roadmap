@@ -589,6 +589,33 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function attachEventListeners() {
+    const sidebarBrand = document.querySelector(".sidebar-brand");
+    const headerTitle = document.querySelector(".header-title");
+
+    const resetToHome = () => {
+      searchQuery = "";
+      if (searchInput) searchInput.value = "";
+      if (searchClear) searchClear.style.display = "none";
+      currentDomainFilter = "all";
+      currentCategoryFilter = "all";
+      if (categorySelect) categorySelect.value = "all";
+      isAllExpanded = false;
+      if (window.location.hash) {
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+      }
+      renderRoadmap();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      closeMobileSidebar();
+    };
+
+    if (sidebarBrand) {
+      sidebarBrand.addEventListener("click", resetToHome);
+    }
+    if (headerTitle) {
+      headerTitle.style.cursor = "pointer";
+      headerTitle.addEventListener("click", resetToHome);
+    }
+
     if (mobileMenuBtn) {
       mobileMenuBtn.addEventListener("click", openMobileSidebar);
     }
