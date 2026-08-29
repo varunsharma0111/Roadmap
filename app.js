@@ -191,16 +191,22 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Synchronize active item and auto-expand domain group in sidebar
-  function updateActiveSidebarItem(catId) {
+  function updateActiveSidebarItem(catId, scrollSidebar = true) {
+    let activeItem = null;
     document.querySelectorAll(".sidebar-nav-item").forEach(item => {
       if (item.getAttribute("href") === `#${catId}`) {
         item.classList.add("active");
+        activeItem = item;
         const group = item.closest(".sidebar-domain-group");
         if (group) group.classList.remove("collapsed");
       } else {
         item.classList.remove("active");
       }
     });
+
+    if (activeItem && scrollSidebar) {
+      activeItem.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
 
     if (categorySelect && categorySelect.value !== catId && searchQuery === "") {
       categorySelect.value = catId;
@@ -218,7 +224,7 @@ document.addEventListener("DOMContentLoaded", () => {
       (entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            updateActiveSidebarItem(entry.target.id);
+            updateActiveSidebarItem(entry.target.id, false);
           }
         });
       },
@@ -237,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
     roadmapContent.innerHTML = "";
     let visibleTopicsCount = 0;
     let visibleCategoriesCount = 0;
+    let firstMatchingCatId = null;
 
     const domainGroupMap = {};
     Object.keys(DOMAINS).forEach(dKey => {
@@ -291,6 +298,10 @@ document.addEventListener("DOMContentLoaded", () => {
         visibleCategoriesCount++;
         visibleTopicsCount += filteredTopics.length;
 
+        if (!firstMatchingCatId) {
+          firstMatchingCatId = cat.id;
+        }
+
         const catSection = createCategorySection(cat, filteredTopics, domain);
         domainGroupEl.appendChild(catSection);
       });
@@ -310,6 +321,9 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
       `;
     } else {
+      if (searchQuery.trim() !== "" && firstMatchingCatId) {
+        updateActiveSidebarItem(firstMatchingCatId, true);
+      }
       initScrollSpy();
     }
   }
