@@ -215,12 +215,15 @@ document.addEventListener("DOMContentLoaded", () => {
           if (searchQuery.trim() !== "") {
             const q = searchQuery.toLowerCase();
             const matchName = topic.name.toLowerCase().includes(q);
-            const matchDef = topic.def.toLowerCase().includes(q);
-            const matchWhy = topic.why.toLowerCase().includes(q);
+            const matchDef = topic.def ? topic.def.toLowerCase().includes(q) : false;
+            const matchWhy = topic.why ? topic.why.toLowerCase().includes(q) : false;
             const matchCat = cat.title.toLowerCase().includes(q);
             const matchEx = topic.example ? topic.example.toLowerCase().includes(q) : false;
             const matchRem = topic.remember ? topic.remember.toLowerCase().includes(q) : false;
-            return matchName || matchDef || matchWhy || matchCat || matchEx || matchRem;
+            const matchIdea = topic.idea ? topic.idea.toLowerCase().includes(q) : false;
+            const matchMM = topic.mentalModel ? topic.mentalModel.toLowerCase().includes(q) : false;
+            const matchHIW = topic.howItWorks ? topic.howItWorks.toLowerCase().includes(q) : false;
+            return matchName || matchDef || matchWhy || matchCat || matchEx || matchRem || matchIdea || matchMM || matchHIW;
           }
 
           return true;
@@ -311,11 +314,53 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
+    let ideaHtml = "";
+    if (topic.idea) {
+      ideaHtml = `
+        <div class="details-block">
+          <div class="details-label">The Idea</div>
+          <div class="details-text">${topic.idea}</div>
+        </div>
+      `;
+    }
+
+    let mentalModelHtml = "";
+    if (topic.mentalModel) {
+      mentalModelHtml = `
+        <div class="details-block">
+          <div class="details-label">Mental Model</div>
+          <div class="details-text">💡 ${topic.mentalModel}</div>
+        </div>
+      `;
+    }
+
+    let howItWorksHtml = "";
+    if (topic.howItWorks) {
+      const formattedHW = topic.howItWorks.replace(/\n/g, '<br>');
+      howItWorksHtml = `
+        <div class="details-block">
+          <div class="details-label">How It Works</div>
+          <div class="details-code-box"><code>${formattedHW}</code></div>
+        </div>
+      `;
+    }
+
+    let whyHtml = "";
+    if (topic.why) {
+      const label = (topic.idea || topic.mentalModel) ? "Why It Exists" : "What it does / Production Notes";
+      whyHtml = `
+        <div class="details-block">
+          <div class="details-label">${label}</div>
+          <div class="details-text">${topic.why}</div>
+        </div>
+      `;
+    }
+
     let exampleHtml = "";
     if (topic.example) {
       exampleHtml = `
         <div class="details-block">
-          <div class="details-label">Example</div>
+          <div class="details-label">Practical Example</div>
           <div class="details-code-box"><code>${topic.example}</code></div>
         </div>
       `;
@@ -323,10 +368,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let rememberHtml = "";
     if (topic.remember) {
+      const formattedRem = topic.remember.replace(/\n/g, '<br>');
       rememberHtml = `
         <div class="details-block">
-          <div class="details-label">Key Distinction / Memorize</div>
-          <div class="remember-box">💡 ${topic.remember}</div>
+          <div class="details-label">Important Distinction</div>
+          <div class="remember-box">⚡ ${formattedRem}</div>
         </div>
       `;
     }
@@ -347,10 +393,10 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
 
       <div class="topic-details">
-        <div class="details-block">
-          <div class="details-label">What it does / Production Notes</div>
-          <div class="details-text">${topic.why}</div>
-        </div>
+        ${ideaHtml}
+        ${mentalModelHtml}
+        ${howItWorksHtml}
+        ${whyHtml}
         ${exampleHtml}
         ${rememberHtml}
         ${prereqsHtml}
@@ -471,9 +517,15 @@ document.addEventListener("DOMContentLoaded", () => {
         markdown += `## ${cat.title}\n`;
         markdown += `${cat.description}\n\n`;
         cat.topics.forEach(t => {
-          markdown += `- **${t.name}**: ${t.def}\n  *Production Notes*: ${t.why}\n`;
-          if (t.example) markdown += `  *Example*: \`${t.example}\` \n`;
-          if (t.remember) markdown += `  *Remember*: ${t.remember}\n`;
+          markdown += `### ${t.name}\n`;
+          if (t.idea) markdown += `**The Idea:** ${t.idea}\n`;
+          else if (t.def) markdown += `**Summary:** ${t.def}\n`;
+          if (t.mentalModel) markdown += `**Mental Model:** ${t.mentalModel}\n`;
+          if (t.howItWorks) markdown += `**How It Works:** ${t.howItWorks}\n`;
+          if (t.why) markdown += `**Why It Exists:** ${t.why}\n`;
+          if (t.example) markdown += `**Practical Example:** \`${t.example}\` \n`;
+          if (t.remember) markdown += `**Important Distinction:** ${t.remember}\n`;
+          markdown += `\n`;
         });
         markdown += `\n`;
       });
