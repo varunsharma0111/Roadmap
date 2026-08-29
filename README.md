@@ -1,22 +1,21 @@
 # 🚀 AI Engineering & Production Systems Roadmap
 
-A practical roadmap to understand how modern AI, backend, cloud, DevOps, and distributed systems work in the real world.
+Learn how modern AI systems are built, connected, deployed, secured, monitored, and operated in production.
 
-Covers 52 core technical topics in AI Systems, LLM Engineering, Cloud Infrastructure, Networking, DevOps & Distributed Architecture.
+**52 Core Topics** • **13 Categories** • **4 Technical Domains**
 
 🔗 **Live Deployment**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
 
 ---
 
-## ✨ Features
+## ✨ Learning Features
 
-- **📍 Quick Navigation Sidebar**: Slide-over drawer on mobile and left-side index on desktop for instant section hopping.
+- **📍 Quick Navigation Sidebar**: Slide-over drawer on mobile and left-side index on desktop for instant section hopping with ScrollSpy synchronization.
 - **52 Core Technical Topics**: From Kubernetes Pods & Services to Kafka, Observability, AI Agent Permissions, Harness Engineering, and AI Evaluations.
-- **Executive Collapsed Landing View**: Categories start cleanly collapsed for high-level scanning.
-- **Interactive Expand & Collapse**: Click any category header or topic row to reveal production notes and prerequisites.
+- **Strict Learning Topic Cards**: Every topic structured into *The Idea*, *Mental Model*, *How It Works*, *Practical Example*, *Why It Exists*, and *Important Distinction*.
+- **🟢 🟡 🔴 Visually Exposed Difficulty**: Easily scan beginner, intermediate, and advanced production topics.
+- **🔗 Related Topics Navigation**: Click related topic tags to jump smoothly across concepts in the learning flow.
 - **Instant Search**: Real-time filtering across topic names, definitions, tools, and concepts (e.g. *RAG*, *LLM*, *Kafka*, *Docker*).
-- **Domain Filter Tabs**: Instant filtering by 4 core system domains (*AI Architecture*, *LLMs & Agentic AI*, *Cloud Infrastructure*, *Networking & DevOps*).
-- **Prerequisite Linking**: Click any prerequisite tag to jump directly to and highlight the required topic.
 - **Summary Export**: One-click export copies a formatted Markdown roadmap summary to your clipboard.
 
 ---

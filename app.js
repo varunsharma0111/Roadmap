@@ -359,33 +359,35 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const listContainer = section.querySelector(".topics-list");
     topics.forEach(topic => {
-      const topicRow = createTopicRow(topic, domain);
+      const topicRow = createTopicRow(topic, domain, cat);
       listContainer.appendChild(topicRow);
     });
 
     return section;
   }
 
-  function createTopicRow(topic, domain) {
+  function createTopicRow(topic, domain, cat) {
     const row = document.createElement("div");
     row.className = "topic-row";
     row.setAttribute("data-topic-id", topic.id);
 
-    let prereqsHtml = "";
-    if (topic.prereqs && topic.prereqs.length > 0) {
-      const tags = topic.prereqs.map(pId => {
-        const pTopic = findTopicById(pId);
-        const name = pTopic ? pTopic.name : pId;
-        return `<span class="prereq-pill" data-prereq-id="${pId}" style="color: ${domain.color}; border-color: ${domain.color}40; background: ${domain.color}15;">${name}</span>`;
-      }).join(" ");
-      prereqsHtml = `
-        <div class="details-block" style="margin-top: 0.75rem;">
-          <div class="details-label">Prerequisites</div>
-          <div class="prereq-tags">${tags}</div>
-        </div>
-      `;
+    // Difficulty level badge
+    let levelBadge = "";
+    if (topic.level) {
+      let icon = "🟢";
+      let cssClass = "level-beginner";
+      const lvl = topic.level.toLowerCase();
+      if (lvl.includes("intermediate")) {
+        icon = "🟡";
+        cssClass = "level-intermediate";
+      } else if (lvl.includes("advanced")) {
+        icon = "🔴";
+        cssClass = "level-advanced";
+      }
+      levelBadge = `<span class="topic-level-badge ${cssClass}">${icon} ${topic.level}</span>`;
     }
 
+    // 1. The Idea
     let ideaHtml = "";
     if (topic.idea) {
       ideaHtml = `
@@ -396,6 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
+    // 2. Mental Model
     let mentalModelHtml = "";
     if (topic.mentalModel) {
       mentalModelHtml = `
@@ -406,6 +409,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
+    // 3. How It Works
     let howItWorksHtml = "";
     if (topic.howItWorks) {
       const formattedHW = topic.howItWorks.replace(/\n/g, '<br>');
@@ -417,17 +421,7 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
-    let whyHtml = "";
-    if (topic.why) {
-      const label = (topic.idea || topic.mentalModel) ? "Why It Exists" : "What it does / Production Notes";
-      whyHtml = `
-        <div class="details-block">
-          <div class="details-label">${label}</div>
-          <div class="details-text">${topic.why}</div>
-        </div>
-      `;
-    }
-
+    // 4. Practical Example
     let exampleHtml = "";
     if (topic.example) {
       const formattedEx = topic.example.replace(/\n/g, '<br>');
@@ -439,6 +433,18 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
+    // 5. Why It Exists
+    let whyHtml = "";
+    if (topic.why) {
+      whyHtml = `
+        <div class="details-block">
+          <div class="details-label">Why It Exists</div>
+          <div class="details-text">${topic.why}</div>
+        </div>
+      `;
+    }
+
+    // 6. Important Distinction
     let rememberHtml = "";
     if (topic.remember) {
       const formattedRem = topic.remember.replace(/\n/g, '<br>');
@@ -450,11 +456,44 @@ document.addEventListener("DOMContentLoaded", () => {
       `;
     }
 
+    // 7. Related Topics Navigation
+    let relatedTopicsHtml = "";
+    const relatedList = [];
+
+    if (topic.prereqs && topic.prereqs.length > 0) {
+      topic.prereqs.forEach(pId => {
+        const pTopic = findTopicById(pId);
+        if (pTopic) relatedList.push({ id: pTopic.id, name: pTopic.name });
+      });
+    } else if (cat && cat.topics) {
+      cat.topics.forEach(t => {
+        if (t.id !== topic.id && relatedList.length < 3) {
+          relatedList.push({ id: t.id, name: t.name });
+        }
+      });
+    }
+
+    if (relatedList.length > 0) {
+      const pills = relatedList.map(item => `
+        <span class="related-topic-pill" data-related-id="${item.id}" style="color: ${domain.color}; border-color: ${domain.color}40; background: ${domain.color}15;">
+          → ${item.name}
+        </span>
+      `).join(" ");
+
+      relatedTopicsHtml = `
+        <div class="details-block" style="margin-top: 0.75rem;">
+          <div class="details-label">Related Topics</div>
+          <div class="related-tags">${pills}</div>
+        </div>
+      `;
+    }
+
     row.innerHTML = `
       <div class="topic-summary">
         <div class="topic-left">
           <span class="topic-check-icon">${ICONS.check}</span>
           <span class="topic-name">${topic.name}</span>
+          ${levelBadge}
           <span class="topic-def">${topic.def}</span>
         </div>
 
@@ -469,23 +508,23 @@ document.addEventListener("DOMContentLoaded", () => {
         ${ideaHtml}
         ${mentalModelHtml}
         ${howItWorksHtml}
-        ${whyHtml}
         ${exampleHtml}
+        ${whyHtml}
         ${rememberHtml}
-        ${prereqsHtml}
+        ${relatedTopicsHtml}
       </div>
     `;
 
     row.addEventListener("click", (e) => {
-      if (e.target.closest(".prereq-pill")) return;
+      if (e.target.closest(".related-topic-pill") || e.target.closest(".prereq-pill")) return;
       row.classList.toggle("expanded");
     });
 
-    const prereqPills = row.querySelectorAll(".prereq-pill");
-    prereqPills.forEach(pill => {
+    const relatedPills = row.querySelectorAll(".related-topic-pill");
+    relatedPills.forEach(pill => {
       pill.addEventListener("click", (e) => {
         e.stopPropagation();
-        const targetId = pill.getAttribute("data-prereq-id");
+        const targetId = pill.getAttribute("data-related-id");
         highlightAndScrollToTopic(targetId);
       });
     });
@@ -590,7 +629,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (btnExport) {
       btnExport.addEventListener("click", () => {
-        let markdown = `# AI Engineer / FDE Roadmap Summary\n\n`;
+        let markdown = `# AI Engineering & Production Systems Roadmap Summary\n\n`;
 
         ROADMAP_DATA.forEach(cat => {
           markdown += `## ${cat.title}\n`;
@@ -598,11 +637,11 @@ document.addEventListener("DOMContentLoaded", () => {
           cat.topics.forEach(t => {
             markdown += `### ${t.name}\n`;
             if (t.idea) markdown += `**The Idea:** ${t.idea}\n`;
-            else if (t.def) markdown += `**Summary:** ${t.def}\n`;
-            if (t.mentalModel) markdown += `**Mental Model:** ${t.mentalModel}\n`;
-            if (t.howItWorks) markdown += `**How It Works:** ${t.howItWorks}\n`;
+            else if (t.def) markdown += `**The Idea:** ${t.def}\n`;
+            if (t.mentalModel) markdown += `**Mental Model:** 💡 ${t.mentalModel}\n`;
+            if (t.howItWorks) markdown += `**How It Works:**\n\`\`\`text\n${t.howItWorks}\n\`\`\`\n`;
+            if (t.example) markdown += `**Practical Example:**\n\`\`\`text\n${t.example}\n\`\`\`\n`;
             if (t.why) markdown += `**Why It Exists:** ${t.why}\n`;
-            if (t.example) markdown += `**Practical Example:** \`${t.example}\` \n`;
             if (t.remember) markdown += `**Important Distinction:** ${t.remember}\n`;
             markdown += `\n`;
           });
