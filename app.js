@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let currentCategoryFilter = "all";
   let searchQuery = "";
   let isAllExpanded = false;
+  let scrollObserver = null;
 
   // DOM Elements
   const searchInput = document.getElementById("search-input");
@@ -43,6 +44,12 @@ document.addEventListener("DOMContentLoaded", () => {
     renderSidebarNav();
     renderRoadmap();
     attachEventListeners();
+
+    // Check for initial URL Hash anchor deep link
+    if (window.location.hash) {
+      const catId = window.location.hash.substring(1);
+      setTimeout(() => scrollToCategory(catId), 300);
+    }
   }
 
   // Populate Dropdown Filters
@@ -79,6 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function selectDomainFilter(domainId) {
     currentDomainFilter = domainId;
+    currentCategoryFilter = "all";
+    if (categorySelect) categorySelect.value = "all";
+
     document.querySelectorAll(".domain-tab").forEach(tab => {
       if (tab.getAttribute("data-domain") === domainId) {
         tab.classList.add("active");
@@ -151,17 +161,19 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function scrollToCategory(catId) {
-    if (searchQuery !== "" || currentDomainFilter !== "all" || currentCategoryFilter !== "all") {
+    if (searchQuery !== "" || currentDomainFilter !== "all") {
       currentDomainFilter = "all";
-      currentCategoryFilter = "all";
       searchQuery = "";
       searchInput.value = "";
       searchClear.style.display = "none";
-      categorySelect.value = "all";
       document.querySelectorAll(".domain-tab").forEach(t => t.classList.remove("active"));
       document.querySelector('.domain-tab[data-domain="all"]').classList.add("active");
       renderRoadmap();
     }
+
+    currentCategoryFilter = catId;
+    if (categorySelect) categorySelect.value = catId;
+    updateActiveSidebarItem(catId);
 
     setTimeout(() => {
       const targetSection = document.getElementById(catId);
@@ -174,6 +186,48 @@ document.addEventListener("DOMContentLoaded", () => {
         }, 2500);
       }
     }, 100);
+  }
+
+  // Synchronize active item and auto-expand domain group in sidebar
+  function updateActiveSidebarItem(catId) {
+    document.querySelectorAll(".sidebar-nav-item").forEach(item => {
+      if (item.getAttribute("href") === `#${catId}`) {
+        item.classList.add("active");
+        const group = item.closest(".sidebar-domain-group");
+        if (group) group.classList.remove("collapsed");
+      } else {
+        item.classList.remove("active");
+      }
+    });
+
+    if (categorySelect && categorySelect.value !== catId && searchQuery === "") {
+      categorySelect.value = catId;
+    }
+  }
+
+  // ScrollSpy Observer to track active section while scrolling
+  function initScrollSpy() {
+    if (scrollObserver) scrollObserver.disconnect();
+
+    const sections = document.querySelectorAll(".category-section");
+    if (sections.length === 0) return;
+
+    scrollObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            updateActiveSidebarItem(entry.target.id);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-15% 0px -55% 0px",
+        threshold: 0.15
+      }
+    );
+
+    sections.forEach(sec => scrollObserver.observe(sec));
   }
 
   // Main Render Roadmap Function
@@ -253,6 +307,8 @@ document.addEventListener("DOMContentLoaded", () => {
           <p>Try tweaking your search query.</p>
         </div>
       `;
+    } else {
+      initScrollSpy();
     }
   }
 
@@ -495,7 +551,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     categorySelect.addEventListener("change", (e) => {
       currentCategoryFilter = e.target.value;
-      renderRoadmap();
+      if (currentCategoryFilter !== "all") {
+        scrollToCategory(currentCategoryFilter);
+      } else {
+        renderRoadmap();
+      }
     });
 
     btnToggleAll.addEventListener("click", () => {
