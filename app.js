@@ -358,10 +358,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let exampleHtml = "";
     if (topic.example) {
+      const formattedEx = topic.example.replace(/\n/g, '<br>');
       exampleHtml = `
         <div class="details-block">
           <div class="details-label">Practical Example</div>
-          <div class="details-code-box"><code>${topic.example}</code></div>
+          <div class="details-code-box"><code>${formattedEx}</code></div>
         </div>
       `;
     }
