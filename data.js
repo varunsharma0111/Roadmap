@@ -1,6 +1,6 @@
 /**
  * AI Engineering & Production Systems Roadmap Dataset
- * Exclusively contains the 52 System & AI Engineering Topics.
+ * Exclusively contains the 53 System & AI Engineering Topics.
  */
 
 const DOMAINS = {
@@ -539,6 +539,18 @@ const ROADMAP_DATA = [
         why: "Some network environments prevent direct peer-to-peer connectivity.",
         remember: "TURN ≠ Direct P2P\n\nP2P → peers communicate directly\nTURN → server relays traffic between peers when direct connection fails",
         level: "Advanced"
+      },
+      {
+        id: "cat-9-3",
+        name: "Jump Host / Bastion Host",
+        def: "A Jump Host is a controlled server used as an entry point to access servers inside a private network.",
+        idea: "A Jump Host is a controlled server used as an entry point to access servers inside a private network.",
+        mentalModel: "Think of it as a security gate: instead of entering every private room directly, you first enter through one controlled gate.",
+        howItWorks: "Developer\n    ↓\nJump Host / Bastion\n    ↓\nPrivate Server\n    ↓\nDatabase / Application",
+        example: "Your PostgreSQL server is inside a private network and has no public IP.\n\nInstead of:\n\nInternet → PostgreSQL ❌\n\nyou use:\n\nDeveloper\n    ↓ SSH\nJump Host\n    ↓ SSH\nPrivate PostgreSQL Server",
+        why: "It prevents private servers from needing direct public access and gives you a controlled entry point for administrative access.",
+        remember: "Jump Host ≠ VPN\n\nJump Host → you connect to a controlled server first, then access private resources.\nVPN → creates network-level access into the private network.\n\nA Jump Host is also commonly called a Bastion Host.",
+        level: "Intermediate"
       }
     ]
   },

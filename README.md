@@ -2,7 +2,7 @@
 
 Learn how modern AI systems are built, connected, deployed, secured, monitored, and operated in production.
 
-**52 Core Topics** • **13 Categories** • **4 Technical Domains**
+**53 Core Topics** • **13 Categories** • **4 Technical Domains**
 
 🔗 **Live Deployment**: [https://roadmap-eight-gold.vercel.app/](https://roadmap-eight-gold.vercel.app/)
 
@@ -11,7 +11,7 @@ Learn how modern AI systems are built, connected, deployed, secured, monitored, 
 ## ✨ Learning Features
 
 - **📍 Quick Navigation Sidebar**: Slide-over drawer on mobile and left-side index on desktop for instant section hopping with ScrollSpy synchronization.
-- **52 Core Technical Topics**: From Kubernetes Pods & Services to Kafka, Observability, AI Agent Permissions, Harness Engineering, and AI Evaluations.
+- **53 Core Technical Topics**: From Kubernetes Pods & Services to Kafka, Observability, AI Agent Permissions, Harness Engineering, and AI Evaluations.
 - **Strict Learning Topic Cards**: Every topic structured into *The Idea*, *Mental Model*, *How It Works*, *Practical Example*, *Why It Exists*, and *Important Distinction*.
 - **🟢 🟡 🔴 Visually Exposed Difficulty**: Easily scan beginner, intermediate, and advanced production topics.
 - **🔗 Related Topics Navigation**: Click related topic tags to jump smoothly across concepts in the learning flow.

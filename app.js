@@ -1,6 +1,6 @@
 /**
  * AI Engineering & Production Systems Roadmap Application Logic
- * Supports 52 System & AI Topics across 13 Categories and 4 Technical Domains.
+ * Supports 53 System & AI Topics across 13 Categories and 4 Technical Domains.
  */
 
 document.addEventListener("DOMContentLoaded", () => {
