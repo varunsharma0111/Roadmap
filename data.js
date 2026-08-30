@@ -8,32 +8,32 @@ const DOMAINS = {
     id: "cloud",
     title: "Cloud & Infrastructure",
     icon: "cloud-server",
-    color: "#34d399",
-    lightColor: "rgba(52, 211, 153, 0.15)",
+    color: "var(--cloud-color)",
+    lightColor: "var(--cloud-color-alpha15)",
     gradient: "linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%)"
   },
   ENGINEERING: {
     id: "engineering",
     title: "DevOps & Distributed Systems",
     icon: "cpu",
-    color: "#38bdf8",
-    lightColor: "rgba(56, 189, 248, 0.15)",
+    color: "var(--engineering-color)",
+    lightColor: "var(--engineering-color-alpha15)",
     gradient: "linear-gradient(135deg, #f59e0b 0%, #ef4444 100%)"
   },
   NETWORKING: {
     id: "networking",
     title: "Networking & Real-Time",
     icon: "network",
-    color: "#fbbf24",
-    lightColor: "rgba(251, 191, 36, 0.15)",
+    color: "var(--networking-color)",
+    lightColor: "var(--networking-color-alpha15)",
     gradient: "linear-gradient(135deg, #10b981 0%, #14b8a6 100%)"
   },
   AI: {
     id: "ai",
     title: "AI & Agentic Systems",
     icon: "brain-circuit",
-    color: "#818cf8",
-    lightColor: "rgba(129, 140, 248, 0.15)",
+    color: "var(--ai-color)",
+    lightColor: "var(--ai-color-alpha15)",
     gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)"
   }
 };

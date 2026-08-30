@@ -16,6 +16,7 @@ Learn how modern AI systems are built, connected, deployed, secured, monitored, 
 - **🟢 🟡 🔴 Visually Exposed Difficulty**: Easily scan beginner, intermediate, and advanced production topics.
 - **🔗 Related Topics Navigation**: Click related topic tags to jump smoothly across concepts in the learning flow.
 - **Instant Search**: Real-time filtering across topic names, definitions, tools, and concepts (e.g. *RAG*, *LLM*, *Kafka*, *Docker*).
+- **🌗 Seamless Light & Dark Modes**: Dynamic theme switcher with high-contrast color tokens and user preference persistence (`localStorage` & system default detection).
 - **Summary Export**: One-click export copies a formatted Markdown roadmap summary to your clipboard.
 
 ---

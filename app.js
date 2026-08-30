@@ -26,6 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenuBtn = document.getElementById("mobile-menu-btn");
 
   const btnToggleAll = document.getElementById("btn-toggle-all");
+  const btnThemeToggle = document.getElementById("btn-theme-toggle");
   const btnExport = document.getElementById("btn-export");
   const toastContainer = document.getElementById("toast-container");
 
@@ -39,6 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
   init();
 
   function init() {
+    initTheme();
     populateCategoryDropdown();
     renderDomainTabs();
     renderSidebarNav();
@@ -348,7 +350,7 @@ document.addEventListener("DOMContentLoaded", () => {
           <p class="category-desc">${cat.description}</p>
         </div>
         <div class="category-header-right">
-          <span class="domain-badge-pill" style="color: ${domain.color}; border-color: ${domain.color}40; background: ${domain.color}15;">${domain.title}</span>
+          <span class="domain-badge-pill" data-domain="${domain.id}">${domain.title}</span>
           <span class="cat-toggle-icon">${ICONS.chevronDown}</span>
         </div>
       </div>
@@ -478,7 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (relatedList.length > 0) {
       const pills = relatedList.map(item => `
-        <span class="related-topic-pill" data-related-id="${item.id}" style="color: ${domain.color}; border-color: ${domain.color}40; background: ${domain.color}15;">
+        <span class="related-topic-pill" data-domain="${domain.id}" data-related-id="${item.id}">
           → ${item.name}
         </span>
       `).join(" ");
@@ -665,6 +667,13 @@ document.addEventListener("DOMContentLoaded", () => {
       btnToggleAll.textContent = isAllExpanded ? "Collapse All" : "Expand All";
     });
 
+    if (btnThemeToggle) {
+      btnThemeToggle.addEventListener("click", () => {
+        const isLight = document.documentElement.getAttribute("data-theme") === "light";
+        applyTheme(isLight ? "dark" : "light");
+      });
+    }
+
     if (btnExport) {
       btnExport.addEventListener("click", () => {
         let markdown = `# AI Engineering & Production Systems Roadmap Summary\n\n`;
@@ -693,6 +702,32 @@ document.addEventListener("DOMContentLoaded", () => {
         });
       });
     }
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem("theme");
+    let theme = "dark";
+    if (savedTheme) {
+      theme = savedTheme;
+    } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) {
+      theme = "light";
+    }
+    applyTheme(theme);
+  }
+
+  function applyTheme(theme) {
+    if (theme === "light") {
+      document.documentElement.setAttribute("data-theme", "light");
+      if (btnThemeToggle) {
+        btnThemeToggle.innerHTML = `<span class="theme-icon">☀️</span> <span class="theme-text">Light</span>`;
+      }
+    } else {
+      document.documentElement.removeAttribute("data-theme");
+      if (btnThemeToggle) {
+        btnThemeToggle.innerHTML = `<span class="theme-icon">🌙</span> <span class="theme-text">Dark</span>`;
+      }
+    }
+    localStorage.setItem("theme", theme);
   }
 
   function showToast(message) {

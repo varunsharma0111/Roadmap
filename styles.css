@@ -5,12 +5,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
-  /* Color Palette */
+  /* Color Palette - Dark Theme (Default) */
   --bg-dark: #0b0f17;
   --bg-surface: #141a24;
   --bg-surface-hover: #1c2433;
   --bg-elevated: #222c3e;
-  
+  --sidebar-bg: #0e131d;
+  --controls-bg: rgba(11, 15, 23, 0.92);
+  --cat-header-bg: rgba(255, 255, 255, 0.015);
+  --details-bg: rgba(0, 0, 0, 0.2);
+  --code-bg: rgba(0, 0, 0, 0.35);
+  --code-border: #2a3447;
+  --code-text: #34d399;
+
   --border-subtle: rgba(255, 255, 255, 0.08);
   --border-medium: #2a3447;
   --border-focus: #6366f1;
@@ -19,13 +26,32 @@
   --text-secondary: #94a3b8;
   --text-muted: #64748b;
 
+  --header-title-gradient: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+
   /* Domain Color Accents */
-  --ai-color: #818cf8;        /* Vibrant Indigo */
-  --llm-color: #38bdf8;       /* Vibrant Sky Blue */
-  --cloud-color: #34d399;     /* Vibrant Emerald */
-  --net-color: #fbbf24;       /* Vibrant Amber */
+  --ai-color: #818cf8;
+  --ai-color-alpha15: rgba(129, 140, 248, 0.15);
+  --ai-color-alpha30: rgba(129, 140, 248, 0.3);
+
+  --engineering-color: #38bdf8;
+  --engineering-color-alpha15: rgba(56, 189, 248, 0.15);
+  --engineering-color-alpha30: rgba(56, 189, 248, 0.3);
+
+  --cloud-color: #34d399;
+  --cloud-color-alpha15: rgba(52, 211, 153, 0.15);
+  --cloud-color-alpha30: rgba(52, 211, 153, 0.3);
+
+  --networking-color: #fbbf24;
+  --networking-color-alpha15: rgba(251, 191, 36, 0.15);
+  --networking-color-alpha30: rgba(251, 191, 36, 0.3);
 
   --status-completed: #10b981;
+
+  --remember-bg: rgba(251, 191, 36, 0.1);
+  --remember-border: rgba(251, 191, 36, 0.3);
+  --remember-text: #fbbf24;
 
   /* Fonts */
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
@@ -35,9 +61,58 @@
   --radius-sm: 6px;
   --radius-md: 8px;
   --radius-lg: 12px;
+}
 
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+[data-theme="light"] {
+  color-scheme: light;
+  
+  /* Color Palette - Light Theme */
+  --bg-dark: #f8fafc;
+  --bg-surface: #ffffff;
+  --bg-surface-hover: #f1f5f9;
+  --bg-elevated: #e2e8f0;
+  --sidebar-bg: #f1f5f9;
+  --controls-bg: rgba(248, 250, 252, 0.92);
+  --cat-header-bg: rgba(0, 0, 0, 0.015);
+  --details-bg: #f8fafc;
+  --code-bg: #f1f5f9;
+  --code-border: #cbd5e1;
+  --code-text: #047857;
+
+  --border-subtle: rgba(0, 0, 0, 0.08);
+  --border-medium: #cbd5e1;
+  --border-focus: #4f46e5;
+
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #64748b;
+
+  --header-title-gradient: linear-gradient(135deg, #0f172a 0%, #334155 100%);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  /* Domain Color Accents - High Contrast for Light BG */
+  --ai-color: #4f46e5;
+  --ai-color-alpha15: rgba(79, 70, 229, 0.12);
+  --ai-color-alpha30: rgba(79, 70, 229, 0.3);
+
+  --engineering-color: #0284c7;
+  --engineering-color-alpha15: rgba(2, 132, 199, 0.12);
+  --engineering-color-alpha30: rgba(2, 132, 199, 0.3);
+
+  --cloud-color: #059669;
+  --cloud-color-alpha15: rgba(5, 150, 105, 0.12);
+  --cloud-color-alpha30: rgba(5, 150, 105, 0.3);
+
+  --networking-color: #d97706;
+  --networking-color-alpha15: rgba(217, 119, 6, 0.12);
+  --networking-color-alpha30: rgba(217, 119, 6, 0.3);
+
+  --status-completed: #059669;
+
+  --remember-bg: rgba(217, 119, 6, 0.1);
+  --remember-border: rgba(217, 119, 6, 0.3);
+  --remember-text: #b45309;
 }
 
 /* Reset */
@@ -71,7 +146,7 @@ body {
 .sidebar {
   width: 280px;
   flex-shrink: 0;
-  background: #0e131d;
+  background: var(--sidebar-bg);
   border-right: 1px solid var(--border-medium);
   height: 100vh;
   position: sticky;
@@ -263,7 +338,7 @@ body {
   font-size: 2.2rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+  background: var(--header-title-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -418,7 +493,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(11, 15, 23, 0.92);
+  background: var(--controls-bg);
   backdrop-filter: blur(12px);
   padding: 1rem 0;
   border-bottom: 1px solid var(--border-medium);
@@ -512,6 +587,12 @@ body {
   border-color: var(--ai-color);
 }
 
+.btn-theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
 .domain-tabs {
   display: flex;
   gap: 0.4rem;
@@ -582,7 +663,7 @@ body {
 /* CATEGORY HEADER WITH EXPAND TOGGLE */
 .category-header {
   padding: 1.1rem 1.4rem;
-  background: rgba(255, 255, 255, 0.015);
+  background: var(--cat-header-bg);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -630,8 +711,35 @@ body {
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
   white-space: nowrap;
-  background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--border-subtle);
+}
+
+.domain-badge-pill[data-domain="cloud"],
+.related-topic-pill[data-domain="cloud"] {
+  color: var(--cloud-color);
+  border-color: var(--cloud-color-alpha30);
+  background: var(--cloud-color-alpha15);
+}
+
+.domain-badge-pill[data-domain="engineering"],
+.related-topic-pill[data-domain="engineering"] {
+  color: var(--engineering-color);
+  border-color: var(--engineering-color-alpha30);
+  background: var(--engineering-color-alpha15);
+}
+
+.domain-badge-pill[data-domain="networking"],
+.related-topic-pill[data-domain="networking"] {
+  color: var(--networking-color);
+  border-color: var(--networking-color-alpha30);
+  background: var(--networking-color-alpha15);
+}
+
+.domain-badge-pill[data-domain="ai"],
+.related-topic-pill[data-domain="ai"] {
+  color: var(--ai-color);
+  border-color: var(--ai-color-alpha30);
+  background: var(--ai-color-alpha15);
 }
 
 .cat-toggle-icon {
@@ -740,7 +848,7 @@ body {
 .topic-details {
   display: none;
   padding: 1rem 1.4rem 1.1rem 3.4rem;
-  background: rgba(0, 0, 0, 0.18);
+  background: var(--details-bg);
   border-top: 1px dashed var(--border-subtle);
   font-size: 0.84rem;
 }
@@ -819,9 +927,9 @@ body {
 
 /* TOPIC ROW REMEMBER & EXAMPLE BOXES */
 .remember-box {
-  background: rgba(251, 191, 36, 0.1);
-  border: 1px solid rgba(251, 191, 36, 0.3);
-  color: #fbbf24;
+  background: var(--remember-bg);
+  border: 1px solid var(--remember-border);
+  color: var(--remember-text);
   padding: 0.4rem 0.75rem;
   border-radius: var(--radius-sm);
   font-size: 0.82rem;
@@ -832,11 +940,11 @@ body {
   display: inline-block;
   font-family: var(--font-code);
   font-size: 0.78rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--border-medium);
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
   padding: 0.3rem 0.65rem;
   border-radius: var(--radius-sm);
-  color: var(--cloud-color);
+  color: var(--code-text);
 }
 
 /* SIDEBAR CLOSE BUTTON & OVERLAY */
