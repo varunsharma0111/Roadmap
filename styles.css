@@ -47,6 +47,9 @@
   --networking-color-alpha15: rgba(251, 191, 36, 0.15);
   --networking-color-alpha30: rgba(251, 191, 36, 0.3);
 
+  --level-advanced-color: #f87171;
+  --level-advanced-alpha30: rgba(248, 113, 113, 0.3);
+
   --status-completed: #10b981;
 
   --remember-bg: rgba(251, 191, 36, 0.1);
@@ -107,6 +110,9 @@
   --networking-color: #d97706;
   --networking-color-alpha15: rgba(217, 119, 6, 0.12);
   --networking-color-alpha30: rgba(217, 119, 6, 0.3);
+
+  --level-advanced-color: #dc2626;
+  --level-advanced-alpha30: rgba(220, 38, 38, 0.3);
 
   --status-completed: #059669;
 
@@ -423,18 +429,18 @@ body {
 }
 
 .level-beginner {
-  color: #34d399;
-  border-color: rgba(52, 211, 153, 0.3);
+  color: var(--cloud-color);
+  border-color: var(--cloud-color-alpha30);
 }
 
 .level-intermediate {
-  color: #fbbf24;
-  border-color: rgba(251, 191, 36, 0.3);
+  color: var(--networking-color);
+  border-color: var(--networking-color-alpha30);
 }
 
 .level-advanced {
-  color: #f87171;
-  border-color: rgba(248, 113, 113, 0.3);
+  color: var(--level-advanced-color);
+  border-color: var(--level-advanced-alpha30);
 }
 
 /* RELATED TOPIC TAGS */
@@ -514,7 +520,7 @@ body {
 .btn-export-link:hover {
   color: var(--text-primary);
   border-color: var(--ai-color);
-  background: rgba(129, 140, 248, 0.1);
+  background: var(--ai-color-alpha15);
 }
 
 
@@ -584,8 +590,15 @@ body {
   background: none;
   border: none;
   color: var(--text-muted);
+  font-size: 0.85rem;
   cursor: pointer;
+  padding: 0.2rem;
   display: none;
+  transition: color 0.15s ease;
+}
+
+.search-clear:hover {
+  color: var(--text-primary);
 }
 
 .select-control {
@@ -917,16 +930,17 @@ body {
   font-family: var(--font-code);
   font-size: 0.73rem;
   padding: 0.12rem 0.5rem;
-  background: rgba(129, 140, 248, 0.08);
-  border: 1px solid rgba(129, 140, 248, 0.2);
+  background: var(--ai-color-alpha15);
+  border: 1px solid var(--ai-color-alpha30);
   border-radius: 4px;
   color: var(--ai-color);
   cursor: pointer;
+  transition: all 0.15s ease;
 }
 
 .prereq-pill:hover {
   border-color: var(--ai-color);
-  background: rgba(129, 140, 248, 0.18);
+  background: var(--ai-color-alpha30);
 }
 
 /* Highlight Target Animation */
@@ -1090,13 +1104,14 @@ body {
 
 @media (max-width: 768px) {
   .header {
-    padding: 1.75rem 0 1.5rem;
+    padding: 1.5rem 0 1.25rem;
   }
 
   .header-main {
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-start;
-    gap: 1.25rem;
+    justify-content: space-between;
+    gap: 1rem;
   }
 
   .header-title {
