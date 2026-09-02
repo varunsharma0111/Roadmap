@@ -62,18 +62,18 @@ const ROADMAP_DATA = [
         level: "MLOps Platform",
         def: "Local MLOps & Machine Learning Platform",
         summaryTag: "Upload → Profile → Train → Evaluate → Promote → Predict",
-        idea: "AuraML is a local machine-learning platform that provides a web interface for uploading datasets, profiling data, running background ML training jobs, evaluating models, promoting approved models, and generating predictions.\n\nThe platform simplifies the ML workflow by connecting dataset management, asynchronous processing, model training, evaluation, and prediction into one application.",
+        idea: "AuraML is a local machine-learning platform that provides a web interface for uploading tabular datasets (CSV files structured into rows & columns), profiling data features, running background ML training jobs, evaluating models, promoting approved models, and generating predictions.\n\nThe platform simplifies the ML workflow by connecting row & column dataset management, asynchronous processing, model training, evaluation, and prediction into one application.",
         techStack: [
           { layer: "Frontend", tech: "React, TypeScript, Vite", usage: "Web interface for datasets, jobs, models, and predictions" },
           { layer: "Backend", tech: "FastAPI, Uvicorn, Python, Pydantic", usage: "REST API, request validation, and application logic" },
-          { layer: "Database", tech: "PostgreSQL, SQLAlchemy, Alembic, asyncpg", usage: "Stores datasets, jobs, models, metrics, and application records" },
+          { layer: "Database", tech: "PostgreSQL, SQLAlchemy, Alembic, asyncpg", usage: "Stores dataset metadata, rows & columns schema, jobs, models, metrics, and records" },
           { layer: "Queue", tech: "Redis", usage: "Queues background profiling and training jobs" },
-          { layer: "Worker", tech: "Python Worker", usage: "Processes queued jobs and performs ML/data operations" },
-          { layer: "ML/Data", tech: "Scikit-learn, Python CSV processing", usage: "Dataset profiling, model training, and evaluation" },
-          { layer: "File Storage", tech: "Local filesystem", usage: "Stores uploaded datasets and model artifacts" },
+          { layer: "Worker", tech: "Python Worker", usage: "Processes queued jobs and performs ML operations on rows & columns" },
+          { layer: "ML/Data", tech: "Scikit-learn, Python CSV processing", usage: "Dataset profiling (rows/columns), model training, and evaluation" },
+          { layer: "File Storage", tech: "Local filesystem", usage: "Stores uploaded CSV datasets and model artifacts" },
           { layer: "Testing", tech: "Pytest, HTTPX", usage: "Tests the running API and end-to-end workflow" }
         ],
-        workflow: `CSV Dataset
+        workflow: `CSV Dataset (Rows & Columns)
 ↓
 Dataset Upload
 ↓
@@ -85,9 +85,9 @@ Redis Job Queue
 ↓
 Background Worker
 ↓
-Dataset Profiling
+Dataset Profiling (Schema / Missing Values)
 ↓
-PostgreSQL
+PostgreSQL Metadata Store
 ↓
 Model Training
 ↓
@@ -118,25 +118,19 @@ Local Storage   Redis Queue
                        ↓
                 Prediction Result`,
         features: [
-          "Dataset upload",
-          "Automatic dataset profiling",
-          "Schema inference",
-          "Data health analysis",
-          "Background processing",
-          "Redis-backed job queue",
-          "ML model training",
-          "Model evaluation",
-          "Quality gates",
-          "Model promotion",
-          "Prediction API",
-          "Model artifact storage",
-          "PostgreSQL metadata storage"
-        ],
-        churnExample: {
-          title: "Customer Churn Prediction",
-          desc: "AuraML can be demonstrated using a customer churn dataset.\n\nChurn means that a customer stopped using a company's service.\n\nThe churn column is the target variable that the model learns to predict.",
-          code: "churn = 0 → Customer did not churn\nchurn = 1 → Customer churned"
-        }
+          "Tabular CSV dataset upload (rows & columns)",
+          "Automatic dataset profiling & health analysis",
+          "Schema & column feature type inference",
+          "Data health & missing value analysis",
+          "Background processing with Redis queue",
+          "ML model training on tabular data",
+          "Model evaluation & metrics tracking",
+          "Quality gates & automated checks",
+          "Model promotion to active prediction status",
+          "RESTful Prediction API endpoint",
+          "Model artifact & file storage",
+          "PostgreSQL metadata & schema tracking"
+        ]
       }
     ]
   },
