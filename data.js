@@ -4,6 +4,14 @@
  */
 
 const DOMAINS = {
+  PROJECTS: {
+    id: "projects",
+    title: "Production Projects & Platforms",
+    icon: "folder",
+    color: "var(--ai-color)",
+    lightColor: "var(--ai-color-alpha15)",
+    gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)"
+  },
   CLOUD: {
     id: "cloud",
     title: "Cloud & Infrastructure",
@@ -39,6 +47,99 @@ const DOMAINS = {
 };
 
 const ROADMAP_DATA = [
+  // ==================== FEATURED PROJECTS & PLATFORMS ====================
+  {
+    id: "cat-projects",
+    domainId: "projects",
+    number: 0,
+    title: "Featured MLOps Platforms",
+    description: "Production machine learning platforms, dataset profiling, background job queues, model promotion, and prediction APIs.",
+    icon: "cpu",
+    topics: [
+      {
+        id: "proj-auraml",
+        name: "AuraML",
+        level: "MLOps Platform",
+        def: "Local MLOps & Machine Learning Platform",
+        summaryTag: "Upload → Profile → Train → Evaluate → Promote → Predict",
+        idea: "AuraML is a local machine-learning platform that provides a web interface for uploading datasets, profiling data, running background ML training jobs, evaluating models, promoting approved models, and generating predictions.\n\nThe platform simplifies the ML workflow by connecting dataset management, asynchronous processing, model training, evaluation, and prediction into one application.",
+        techStack: [
+          { layer: "Frontend", tech: "React, TypeScript, Vite", usage: "Web interface for datasets, jobs, models, and predictions" },
+          { layer: "Backend", tech: "FastAPI, Uvicorn, Python, Pydantic", usage: "REST API, request validation, and application logic" },
+          { layer: "Database", tech: "PostgreSQL, SQLAlchemy, Alembic, asyncpg", usage: "Stores datasets, jobs, models, metrics, and application records" },
+          { layer: "Queue", tech: "Redis", usage: "Queues background profiling and training jobs" },
+          { layer: "Worker", tech: "Python Worker", usage: "Processes queued jobs and performs ML/data operations" },
+          { layer: "ML/Data", tech: "Scikit-learn, Python CSV processing", usage: "Dataset profiling, model training, and evaluation" },
+          { layer: "File Storage", tech: "Local filesystem", usage: "Stores uploaded datasets and model artifacts" },
+          { layer: "Testing", tech: "Pytest, HTTPX", usage: "Tests the running API and end-to-end workflow" }
+        ],
+        workflow: `CSV Dataset
+↓
+Dataset Upload
+↓
+FastAPI Backend
+↓
+Local File Storage
+↓
+Redis Job Queue
+↓
+Background Worker
+↓
+Dataset Profiling
+↓
+PostgreSQL
+↓
+Model Training
+↓
+Model Evaluation
+↓
+Quality Gate
+↓
+Model Promotion
+↓
+Prediction API
+↓
+Prediction Result`,
+        architecture: `User / Browser
+        ↓
+React Frontend
+        ↓
+FastAPI Backend
+       ↙ ↘
+Local Storage   Redis Queue
+                  ↓
+           Python Worker
+              ↙      ↘
+       PostgreSQL   Scikit-learn
+                       ↓
+                 Model Artifact
+                       ↓
+                Prediction API
+                       ↓
+                Prediction Result`,
+        features: [
+          "Dataset upload",
+          "Automatic dataset profiling",
+          "Schema inference",
+          "Data health analysis",
+          "Background processing",
+          "Redis-backed job queue",
+          "ML model training",
+          "Model evaluation",
+          "Quality gates",
+          "Model promotion",
+          "Prediction API",
+          "Model artifact storage",
+          "PostgreSQL metadata storage"
+        ],
+        churnExample: {
+          title: "Customer Churn Prediction",
+          desc: "AuraML can be demonstrated using a customer churn dataset.\n\nChurn means that a customer stopped using a company's service.\n\nThe churn column is the target variable that the model learns to predict.",
+          code: "churn = 0 → Customer did not churn\nchurn = 1 → Customer churned"
+        }
+      }
+    ]
+  },
   // ==================== DOMAIN 1: CLOUD & INFRASTRUCTURE ====================
   {
     id: "cat-1",

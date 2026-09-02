@@ -288,7 +288,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const matchIdea = topic.idea ? topic.idea.toLowerCase().includes(q) : false;
             const matchMM = topic.mentalModel ? topic.mentalModel.toLowerCase().includes(q) : false;
             const matchHIW = topic.howItWorks ? topic.howItWorks.toLowerCase().includes(q) : false;
-            return matchName || matchDef || matchWhy || matchCat || matchEx || matchRem || matchIdea || matchMM || matchHIW;
+            const matchTech = topic.techStack ? topic.techStack.some(t => t.layer.toLowerCase().includes(q) || t.tech.toLowerCase().includes(q) || t.usage.toLowerCase().includes(q)) : false;
+            const matchFeat = topic.features ? topic.features.some(f => f.toLowerCase().includes(q)) : false;
+            const matchWf = topic.workflow ? topic.workflow.toLowerCase().includes(q) : false;
+            const matchArch = topic.architecture ? topic.architecture.toLowerCase().includes(q) : false;
+            const matchChurn = topic.churnExample ? (topic.churnExample.title.toLowerCase().includes(q) || topic.churnExample.desc.toLowerCase().includes(q) || topic.churnExample.code.toLowerCase().includes(q)) : false;
+            return matchName || matchDef || matchWhy || matchCat || matchEx || matchRem || matchIdea || matchMM || matchHIW || matchTech || matchFeat || matchWf || matchArch || matchChurn;
           }
 
           return true;
@@ -376,13 +381,15 @@ document.addEventListener("DOMContentLoaded", () => {
     row.className = "topic-row";
     row.setAttribute("data-topic-id", topic.id);
 
-    // Difficulty level badge
+    // Difficulty level badge / summary tag
     let levelBadge = "";
-    if (topic.level) {
+    if (topic.summaryTag) {
+      levelBadge = `<span class="topic-level-badge level-intermediate" style="font-family: var(--font-code); color: var(--ai-color); border-color: var(--ai-color-alpha30); background: var(--ai-color-alpha15);">${topic.summaryTag}</span>`;
+    } else if (topic.level) {
       let icon = "🟢";
       let cssClass = "level-beginner";
       const lvl = topic.level.toLowerCase();
-      if (lvl.includes("intermediate")) {
+      if (lvl.includes("intermediate") || lvl.includes("platform")) {
         icon = "🟡";
         cssClass = "level-intermediate";
       } else if (lvl.includes("advanced")) {
@@ -392,13 +399,103 @@ document.addEventListener("DOMContentLoaded", () => {
       levelBadge = `<span class="topic-level-badge ${cssClass}">${icon} ${topic.level}</span>`;
     }
 
-    // 1. The Idea
+    // 1. The Idea / Overview
     let ideaHtml = "";
     if (topic.idea) {
+      const formattedIdea = topic.idea.replace(/\n/g, '<br>');
       ideaHtml = `
         <div class="details-block">
-          <div class="details-label">The Idea</div>
-          <div class="details-text">${topic.idea}</div>
+          <div class="details-label">Overview</div>
+          <div class="details-text">${formattedIdea}</div>
+        </div>
+      `;
+    }
+
+    // Tech Stack Table
+    let techStackHtml = "";
+    if (topic.techStack && topic.techStack.length > 0) {
+      const rows = topic.techStack.map(item => `
+        <tr>
+          <td class="tech-layer">${item.layer}</td>
+          <td class="tech-name">${item.tech}</td>
+          <td class="tech-usage">${item.usage}</td>
+        </tr>
+      `).join("");
+
+      techStackHtml = `
+        <div class="details-block">
+          <div class="details-label">Tech Stack</div>
+          <div class="tech-stack-table-wrapper">
+            <table class="tech-stack-table">
+              <thead>
+                <tr>
+                  <th>Layer</th>
+                  <th>Technology</th>
+                  <th>Usage</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${rows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      `;
+    }
+
+    // ML Workflow
+    let workflowHtml = "";
+    if (topic.workflow) {
+      const formattedWf = topic.workflow.replace(/\n/g, '<br>');
+      workflowHtml = `
+        <div class="details-block">
+          <div class="details-label">ML Workflow</div>
+          <div class="details-code-box"><code>${formattedWf}</code></div>
+        </div>
+      `;
+    }
+
+    // Architecture Flow
+    let architectureHtml = "";
+    if (topic.architecture) {
+      architectureHtml = `
+        <div class="details-block">
+          <div class="details-label">Architecture</div>
+          <div class="details-code-box"><pre style="font-family: var(--font-code); font-size: 0.78rem; background: var(--code-bg); border: 1px solid var(--code-border); padding: 0.65rem 0.85rem; border-radius: var(--radius-sm); color: var(--code-text); margin: 0; line-height: 1.4; overflow-x: auto;"><code>${topic.architecture}</code></pre></div>
+        </div>
+      `;
+    }
+
+    // Project Features
+    let featuresHtml = "";
+    if (topic.features && topic.features.length > 0) {
+      const items = topic.features.map(f => `
+        <div class="feature-item">
+          <span class="feature-bullet">✓</span>
+          <span>${f}</span>
+        </div>
+      `).join("");
+
+      featuresHtml = `
+        <div class="details-block">
+          <div class="details-label">Project Features</div>
+          <div class="features-grid">
+            ${items}
+          </div>
+        </div>
+      `;
+    }
+
+    // Customer Churn Example
+    let churnHtml = "";
+    if (topic.churnExample) {
+      const formattedDesc = topic.churnExample.desc.replace(/\n/g, '<br>');
+      const formattedCode = topic.churnExample.code.replace(/\n/g, '<br>');
+      churnHtml = `
+        <div class="details-block">
+          <div class="details-label">Real-World Application Example: ${topic.churnExample.title}</div>
+          <div class="details-text" style="margin-bottom: 0.4rem;">${formattedDesc}</div>
+          <div class="details-code-box"><code>${formattedCode}</code></div>
         </div>
       `;
     }
@@ -511,6 +608,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       <div class="topic-details">
         ${ideaHtml}
+        ${techStackHtml}
+        ${workflowHtml}
+        ${architectureHtml}
+        ${featuresHtml}
+        ${churnHtml}
         ${mentalModelHtml}
         ${howItWorksHtml}
         ${exampleHtml}
@@ -683,8 +785,25 @@ document.addEventListener("DOMContentLoaded", () => {
           markdown += `${cat.description}\n\n`;
           cat.topics.forEach(t => {
             markdown += `### ${t.name}\n`;
-            if (t.idea) markdown += `**The Idea:** ${t.idea}\n`;
-            else if (t.def) markdown += `**The Idea:** ${t.def}\n`;
+            if (t.idea) markdown += `**Overview:** ${t.idea}\n`;
+            else if (t.def) markdown += `**Overview:** ${t.def}\n`;
+            if (t.techStack && t.techStack.length > 0) {
+              markdown += `**Tech Stack:**\n`;
+              t.techStack.forEach(ts => {
+                markdown += `- **${ts.layer}**: ${ts.tech} — *${ts.usage}*\n`;
+              });
+            }
+            if (t.workflow) markdown += `**ML Workflow:**\n\`\`\`text\n${t.workflow}\n\`\`\`\n`;
+            if (t.architecture) markdown += `**Architecture:**\n\`\`\`text\n${t.architecture}\n\`\`\`\n`;
+            if (t.features && t.features.length > 0) {
+              markdown += `**Key Features:**\n`;
+              t.features.forEach(f => {
+                markdown += `- ${f}\n`;
+              });
+            }
+            if (t.churnExample) {
+              markdown += `**${t.churnExample.title}:** ${t.churnExample.desc}\n\`\`\`text\n${t.churnExample.code}\n\`\`\`\n`;
+            }
             if (t.mentalModel) markdown += `**Mental Model:** 💡 ${t.mentalModel}\n`;
             if (t.howItWorks) markdown += `**How It Works:**\n\`\`\`text\n${t.howItWorks}\n\`\`\`\n`;
             if (t.example) markdown += `**Practical Example:**\n\`\`\`text\n${t.example}\n\`\`\`\n`;

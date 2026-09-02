@@ -982,14 +982,98 @@ body {
 }
 
 .details-code-box code {
-  display: inline-block;
+  display: block;
   font-family: var(--font-code);
   font-size: 0.78rem;
   background: var(--code-bg);
   border: 1px solid var(--code-border);
-  padding: 0.3rem 0.65rem;
+  padding: 0.65rem 0.85rem;
   border-radius: var(--radius-sm);
   color: var(--code-text);
+  white-space: pre-wrap;
+  line-height: 1.55;
+  overflow-x: auto;
+}
+
+/* TECH STACK TABLE & FEATURE LIST STYLING */
+.tech-stack-table-wrapper {
+  overflow-x: auto;
+  margin-top: 0.35rem;
+  margin-bottom: 0.25rem;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-medium);
+  background: var(--bg-surface);
+}
+
+.tech-stack-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  text-align: left;
+}
+
+.tech-stack-table th {
+  background: var(--bg-surface-hover);
+  color: var(--text-muted);
+  font-family: var(--font-code);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--border-medium);
+}
+
+.tech-stack-table td {
+  padding: 0.5rem 0.85rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.tech-stack-table tr:last-child td {
+  border-bottom: none;
+}
+
+.tech-stack-table .tech-layer {
+  font-weight: 600;
+  color: var(--ai-color);
+  white-space: nowrap;
+  font-size: 0.8rem;
+}
+
+.tech-stack-table .tech-name {
+  font-family: var(--font-code);
+  color: var(--code-text);
+  font-size: 0.8rem;
+}
+
+.tech-stack-table .tech-usage {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 0.5rem 1rem;
+  margin-top: 0.35rem;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.83rem;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  padding: 0.4rem 0.7rem;
+  border-radius: var(--radius-sm);
+}
+
+.feature-bullet {
+  color: var(--status-completed);
+  font-weight: 700;
+  font-size: 0.85rem;
 }
 
 /* SIDEBAR CLOSE BUTTON & OVERLAY */
