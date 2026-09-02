@@ -100,23 +100,64 @@ Model Promotion
 Prediction API
 ↓
 Prediction Result`,
-        architecture: `User / Browser
-        ↓
-React Frontend
-        ↓
-FastAPI Backend
-       ↙ ↘
-Local Storage   Redis Queue
-                  ↓
-           Python Worker
-              ↙      ↘
-       PostgreSQL   Scikit-learn
-                       ↓
-                 Model Artifact
-                       ↓
-                Prediction API
-                       ↓
-                Prediction Result`,
+        architecture: `                    ┌──────────────────────┐
+                    │     User / Browser   │
+                    └──────────┬───────────┘
+                               │
+                               │ HTTP
+                               ▼
+                    ┌──────────────────────┐
+                    │    React Frontend    │
+                    │   localhost:5173     │
+                    └──────────┬───────────┘
+                               │
+                               │ HTTP API
+                               ▼
+                    ┌──────────────────────┐
+                    │   FastAPI Backend    │
+                    │   localhost:8000     │
+                    └───────┬───────┬──────┘
+                            │       │
+                     Dataset│       │Job
+                            │       │
+                            ▼       ▼
+                  ┌────────────┐  ┌────────────┐
+                  │   Local    │  │   Redis    │
+                  │  Storage   │  │   Queue    │
+                  │ ./data/    │  │   :6379    │
+                  └─────┬──────┘  └─────┬──────┘
+                        │                │
+                        │                │ Job
+                        │                ▼
+                        │       ┌────────────────┐
+                        └──────►│ Python Worker  │
+                                │ Background ML  │
+                                └───────┬────────┘
+                                        │
+                              ┌─────────┴─────────┐
+                              │                   │
+                              ▼                   ▼
+                       ┌────────────┐      ┌─────────────┐
+                       │ PostgreSQL │      │ Scikit-learn│
+                       │   :5432    │      │ ML Training │
+                       └────────────┘      └──────┬──────┘
+                                                  │
+                                                  ▼
+                                           ┌─────────────┐
+                                           │    Model    │
+                                           │   Artifact  │
+                                           └──────┬──────┘
+                                                  │
+                                                  ▼
+                                         ┌────────────────┐
+                                         │ Prediction API │
+                                         └───────┬────────┘
+                                                 │
+                                                 ▼
+                                         ┌────────────────┐
+                                         │ Prediction     │
+                                         │ Result         │
+                                         └────────────────┘`,
         features: [
           "Tabular CSV dataset upload (rows & columns)",
           "Automatic dataset profiling & health analysis",
