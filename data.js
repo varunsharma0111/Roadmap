@@ -4,14 +4,6 @@
  */
 
 const DOMAINS = {
-  PROJECTS: {
-    id: "projects",
-    title: "Production Projects & Platforms",
-    icon: "folder",
-    color: "var(--ai-color)",
-    lightColor: "var(--ai-color-alpha15)",
-    gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)"
-  },
   CLOUD: {
     id: "cloud",
     title: "Cloud & Infrastructure",
@@ -43,97 +35,18 @@ const DOMAINS = {
     color: "var(--ai-color)",
     lightColor: "var(--ai-color-alpha15)",
     gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)"
+  },
+  PROJECTS: {
+    id: "projects",
+    title: "Production Projects & Platforms",
+    icon: "folder",
+    color: "var(--ai-color)",
+    lightColor: "var(--ai-color-alpha15)",
+    gradient: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)"
   }
 };
 
 const ROADMAP_DATA = [
-  // ==================== FEATURED PROJECTS & PLATFORMS ====================
-  {
-    id: "cat-projects",
-    domainId: "projects",
-    number: 0,
-    title: "Featured MLOps Platforms",
-    description: "Production machine learning platforms, dataset profiling, background job queues, model promotion, and prediction APIs.",
-    icon: "cpu",
-    topics: [
-      {
-        id: "proj-auraml",
-        name: "AuraML",
-        level: "MLOps Platform",
-        def: "Local MLOps & Machine Learning Platform",
-        summaryTag: "Upload → Profile → Train → Evaluate → Promote → Predict",
-        idea: "AuraML is a local machine-learning platform that provides a web interface for uploading tabular datasets (CSV files structured into rows & columns), profiling data features, running background ML training jobs, evaluating models, promoting approved models, and generating predictions.\n\nThe platform simplifies the ML workflow by connecting row & column dataset management, asynchronous processing, model training, evaluation, and prediction into one application.",
-        techStack: [
-          { layer: "Frontend", tech: "React, TypeScript, Vite", usage: "Web interface for datasets, jobs, models, and predictions" },
-          { layer: "Backend", tech: "FastAPI, Uvicorn, Python, Pydantic", usage: "REST API, request validation, and application logic" },
-          { layer: "Database", tech: "PostgreSQL, SQLAlchemy, Alembic, asyncpg", usage: "Stores dataset metadata, rows & columns schema, jobs, models, metrics, and records" },
-          { layer: "Queue", tech: "Redis", usage: "Queues background profiling and training jobs" },
-          { layer: "Worker", tech: "Python Worker", usage: "Processes queued jobs and performs ML operations on rows & columns" },
-          { layer: "ML/Data", tech: "Scikit-learn, Python CSV processing", usage: "Dataset profiling (rows/columns), model training, and evaluation" },
-          { layer: "File Storage", tech: "Local filesystem", usage: "Stores uploaded CSV datasets and model artifacts" },
-          { layer: "Testing", tech: "Pytest, HTTPX", usage: "Tests the running API and end-to-end workflow" }
-        ],
-        workflow: `CSV Dataset (Rows & Columns)
-↓
-Dataset Upload
-↓
-FastAPI Backend
-↓
-Local File Storage
-↓
-Redis Job Queue
-↓
-Background Worker
-↓
-Dataset Profiling (Schema / Missing Values)
-↓
-PostgreSQL Metadata Store
-↓
-Model Training
-↓
-Model Evaluation
-↓
-Quality Gate
-↓
-Model Promotion
-↓
-Prediction API
-↓
-Prediction Result`,
-        architecture: `User / Browser
-        ↓
-React Frontend
-        ↓
-FastAPI Backend
-       ↙ ↘
-Local Storage   Redis Queue
-                  ↓
-           Python Worker
-              ↙      ↘
-       PostgreSQL   Scikit-learn
-                       ↓
-                 Model Artifact
-                       ↓
-                Prediction API
-                       ↓
-                Prediction Result`,
-        features: [
-          "Tabular CSV dataset upload (rows & columns)",
-          "Automatic dataset profiling & health analysis",
-          "Schema & column feature type inference",
-          "Data health & missing value analysis",
-          "Background processing with Redis queue",
-          "ML model training on tabular data",
-          "Model evaluation & metrics tracking",
-          "Quality gates & automated checks",
-          "Model promotion to active prediction status",
-          "RESTful Prediction API endpoint",
-          "Model artifact & file storage",
-          "PostgreSQL metadata & schema tracking"
-        ]
-      }
-    ]
-  },
   // ==================== DOMAIN 1: CLOUD & INFRASTRUCTURE ====================
   {
     id: "cat-1",
@@ -906,6 +819,94 @@ Local Storage   Redis Queue
         why: "It reduces the blast radius of a bad release.",
         remember: "Canary ≠ Feature Flag\n\nCanary → controls rollout of a deployed version\nFeature Flag → controls whether a feature is enabled",
         level: "Advanced"
+      }
+    ]
+  },
+
+  // ==================== FEATURED PROJECTS & PLATFORMS ====================
+  {
+    id: "cat-projects",
+    domainId: "projects",
+    number: 14,
+    title: "Featured MLOps Platforms",
+    description: "Production machine learning platforms, dataset profiling, background job queues, model promotion, and prediction APIs.",
+    icon: "cpu",
+    topics: [
+      {
+        id: "proj-auraml",
+        name: "AuraML",
+        level: "MLOps Platform",
+        def: "Local MLOps & Machine Learning Platform",
+        summaryTag: "Upload → Profile → Train → Evaluate → Promote → Predict",
+        idea: "AuraML is a local machine-learning platform that provides a web interface for uploading tabular datasets (CSV files structured into rows & columns), profiling data features, running background ML training jobs, evaluating models, promoting approved models, and generating predictions.\n\nThe platform simplifies the ML workflow by connecting row & column dataset management, asynchronous processing, model training, evaluation, and prediction into one application.",
+        techStack: [
+          { layer: "Frontend", tech: "React, TypeScript, Vite", usage: "Web interface for datasets, jobs, models, and predictions" },
+          { layer: "Backend", tech: "FastAPI, Uvicorn, Python, Pydantic", usage: "REST API, request validation, and application logic" },
+          { layer: "Database", tech: "PostgreSQL, SQLAlchemy, Alembic, asyncpg", usage: "Stores dataset metadata, rows & columns schema, jobs, models, metrics, and records" },
+          { layer: "Queue", tech: "Redis", usage: "Queues background profiling and training jobs" },
+          { layer: "Worker", tech: "Python Worker", usage: "Processes queued jobs and performs ML operations on rows & columns" },
+          { layer: "ML/Data", tech: "Scikit-learn, Python CSV processing", usage: "Dataset profiling (rows/columns), model training, and evaluation" },
+          { layer: "File Storage", tech: "Local filesystem", usage: "Stores uploaded CSV datasets and model artifacts" },
+          { layer: "Testing", tech: "Pytest, HTTPX", usage: "Tests the running API and end-to-end workflow" }
+        ],
+        workflow: `CSV Dataset (Rows & Columns)
+↓
+Dataset Upload
+↓
+FastAPI Backend
+↓
+Local File Storage
+↓
+Redis Job Queue
+↓
+Background Worker
+↓
+Dataset Profiling (Schema / Missing Values)
+↓
+PostgreSQL Metadata Store
+↓
+Model Training
+↓
+Model Evaluation
+↓
+Quality Gate
+↓
+Model Promotion
+↓
+Prediction API
+↓
+Prediction Result`,
+        architecture: `User / Browser
+        ↓
+React Frontend
+        ↓
+FastAPI Backend
+       ↙ ↘
+Local Storage   Redis Queue
+                  ↓
+           Python Worker
+              ↙      ↘
+       PostgreSQL   Scikit-learn
+                       ↓
+                 Model Artifact
+                       ↓
+                Prediction API
+                       ↓
+                Prediction Result`,
+        features: [
+          "Tabular CSV dataset upload (rows & columns)",
+          "Automatic dataset profiling & health analysis",
+          "Schema & column feature type inference",
+          "Data health & missing value analysis",
+          "Background processing with Redis queue",
+          "ML model training on tabular data",
+          "Model evaluation & metrics tracking",
+          "Quality gates & automated checks",
+          "Model promotion to active prediction status",
+          "RESTful Prediction API endpoint",
+          "Model artifact & file storage",
+          "PostgreSQL metadata & schema tracking"
+        ]
       }
     ]
   }
